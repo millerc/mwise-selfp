@@ -1,0 +1,23 @@
+                {% for link in featured_links %}
+                <div class="featuredLink">
+                    <p><a href="{{ link.url }}">{{ link.name }}</a></p>
+                    <p>{{ link.description }}</p>
+                    <p class="websiteListing">{{ link.url }}</p>
+                </div>
+                {% endfor %}
+                
+                {% regroup place.get_categorizations by category as categorization_list %}
+
+                {% for category in categorization_list %}
+                <p class="linkCategory">{{ category.grouper }}</p>
+
+                {% for item in category.list %}
+                <p><a href="{{ item.link.url }}">{{ item.link.name }}</a></p>
+                <p>{{ item.link.description }}</p>
+                <p class="websiteListing">{{ item.link.url }}</p>
+                <p>&nbsp;</p>
+                {% endfor %}
+
+                {% empty %}
+<p><em>No links for {{ place }} yet.</em></p>
+                {% endfor %}

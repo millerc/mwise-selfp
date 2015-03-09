@@ -1,0 +1,67 @@
+{% extends "selfpublish/base.html" %}
+{% load humanize %}{% load thumbnail %}
+			{% block content %}
+				<div class="myaccount-sub">
+					<div class="queue_item">
+						<div class="queue_image">
+							{% thumbnail current_design.annotated "x540" as im %}
+								<a onclick="$().jOverlay({url:'{{ im.url }}', imgLoading : '{{ STATIC_URL }}m/demo/ajax-loader.gif'});">
+							{% endthumbnail %}
+								{% thumbnail current_design.preview "175x120" as im %}<img src="{{ im.url }}" />{% endthumbnail %}
+								</a>
+						</div>
+						<div class="queue_item_content">
+							<h3>Current Layout: {{ current_layout }}</h3>
+						</div>
+					</div>
+					<div class="queue_item">
+						<div class="queue_image">
+							{% thumbnail new_design.annotated "x540" as im %}
+								<a onclick="$().jOverlay({url:'{{ im.url }}', imgLoading : '{{ STATIC_URL }}m/demo/ajax-loader.gif'});">
+							{% endthumbnail %}
+								{% thumbnail new_design.preview "175x120" as im %}<img src="{{ im.url }}" />{% endthumbnail %}
+								</a>
+						</div>
+						<div class="queue_item_content">
+							<h3>New Layout: {{ new_template }}</h3>
+						</div>
+					</div>					
+					<div class="queue_item">
+						<div class="queue_item_content">
+							<h3>Unused Items</h3>
+							<ul>{% if dropped_items %}<li>The following do not have a place in the new layout and will not be used:</li>{% endif %}
+								{% for block in dropped_blocks %}<li>[{{ block.template_block.sequence }}] {{ block }}</li>
+								{% empty %}<li>None</li>{% endfor %}
+								{% if dropped_items %}<li>All files and images will remain in your media library.</li>{% endif %}
+							</ul>
+						</div>
+					</div>					
+					<div class="queue_item">
+						<div class="queue_item_content">
+							<h3>Ported Items</h3>
+							<ul>{% if mapped_blocks %}<li>The following items will be moved automatically to the appropriate place on the new layout:</li>{% endif %}
+								{% for block in mapped_blocks %}<li>[{{ block.template_block.sequence }}] {{ block }}</li>{% empty %}<li>None</li>{% endfor %}
+							</ul>
+						</div>
+					</div>					
+					<div class="queue_item">
+						<div class="queue_item_content">
+							<h3>Conflicting Items</h3>
+							<ul>{% if resolve_blocks %}<li>Please map the following items to the desired area on the new layout:</li>{% else %}<li>None</li>{% endif %}</ul>
+							{% if resolve_blocks %}<div class="form"><form method="POST" action="">{% csrf_token %} {{ conflict_form.as_p }}<button type="submit" name="confirm" value="confirm" class="css3button">Confirm</button>&nbsp;<a href="{{ current_layout.get_absolute_url }}"><button type="button" name="cancel" value="cancel" class="css3button">Cancel</button></a></form></div>{% endif %}
+						</div>
+					</div>					
+				</div>
+				<p class="clear"></p>
+				<p class="clear"></p>
+			{% endblock content %}
+			{% block sidebar %}
+			<div id="sidebar">
+				<div id="browse-sub">
+				{% include "selfpublish/sidebar/account.html" %}
+				{% include "selfpublish/sidebar/layouts.html" %}
+				{% include "selfpublish/sidebar/current_layout.html" %}
+				{% include "selfpublish/sidebar/resources.html" %}
+				</div>
+			</div>
+			{% endblock sidebar %}

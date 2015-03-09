@@ -1,0 +1,124 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load ifsetting_tag %}
+{% load thumbnail %}
+
+{% block head_title %}{{ template }}{% endblock %}
+
+{% block extra_head_base %}
+    {% block extra_head %}
+    {% endblock %}
+{% endblock %}
+
+
+{% block body %}
+    <!--
+<div class="feature-sub">
+        <div class="content flyer">
+            <p style="margin:10px;"><h1>My Templates</h1>
+            <ul>
+                {% for customization in request.user.customization_set.all %}
+                <li>
+                <div class="product-preview">{% thumbnail customization.template.preview "109" as im %}<img src="{{ im.url }}" alt="{{ template }}" />{% endthumbnail %}</div>
+                <div class="product-dash">
+                    <ul>
+                        <li class="title"><a href="{{ customization.get_absolute_url }}">{{ customization.template.name }}</a></li>
+                        <li class="desc">Status: {{ customization.status }}</li>
+                        <li class="desc">Updated: {{ customization.updated }}</li>
+                        <li class="desc"><a href="{{ customziation.deliverable.url }}">Download</a></li>
+                    </ul>
+                </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+-->
+<div class="myaccount-sub">
+<div class="infobox announcement">
+						<img src="{{ STATIC_URL }}m/announcement_icon.gif" alt="announcement" />
+						<div class="infoboxtext">
+							<h3>Announcement</h3>
+							<p>This is an announcement. It will display here until you dismiss it or come back later.</p>
+							<p><a class="dismiss_announcement" href="#">Dismiss this message.</a></p>
+						</div>
+					</div>
+					
+					<div class="infobox alert">
+						<img src="{{ STATIC_URL }}m/alert_icon.gif" alt="announcement" />
+						<div class="infoboxtext">
+							<h3>Alert!</h3>
+							<p>This is an alert. It will display when the user needs to be warned or has submitted a form with one or more errors.</p>
+						</div>
+					</div>
+					
+					<div class="infobox success">
+						<img src="{{ STATIC_URL }}m/success_icon.gif" alt="announcement" />
+						<div class="infoboxtext">
+							<h3>Success!</h3>
+							<p>This is a way of letting the user know their form submission or other activity has been successful.</p>
+						</div>
+					</div>
+					
+					<div class="queue_item">
+						<div class="queue_image">
+							<a href="#"><img src="{{ STATIC_URL }}m/box-art.gif" /></a>
+						</div>
+						<div class="queue_item_content">
+							<h3><a href="#">Marketwise Promotional Toolbox</a></h3>
+							<ul>
+								<li>Subscription Level: Platinum (<a href="#">Edit Subscription</a>)</li>
+							</ul>
+							<h4>Recent Publications</h4>
+							<ul>
+				                {% for customization in request.user.customization_set.all %}
+								<li><a href="{{ customization.get_absolute_url }}">{{ customization.template.name }}</a></li>
+								{% endfor %}
+							</ul>
+							<p><a href="#">View All Publications</a></p>
+						</div>
+					</div>
+					<div class="queue_item">
+						<div class="queue_image">
+							<a href="#"><img src="{{ STATIC_URL }}m/box-art.gif" /></a>
+						</div>
+						<div class="queue_item_content">
+							<h3><a href="#">Member Marketwise</a></h3>
+							<ul>
+								<li>Subscription Level: Platinum (<a href="#">Edit Subscription</a>)</li>
+							</ul>
+							<h4>Recent Publications</h4>
+							<ul>
+								<li><a href="#">Custom Brochure #1</a></li>
+								<li><a href="#">Custom Brochure #2</a></li>
+								<li><a href="#">Custom Brochure #3</a></li>
+							</ul>
+							<p><a href="#">View All Publications</a></p>
+						</div>
+					</div><div class="queue_item">
+						<div class="queue_image">
+							<a href="#"><img src="{{ STATIC_URL }}m/box-art.gif" /></a>
+						</div>
+						<div class="queue_item_content">
+							<h3><a href="#">OTB Self-Publishing</a></h3>
+							<ul>
+								<li>Subscription Level: Platinum (<a href="#">Edit Subscription</a>)</li>
+							</ul>
+							<h4>Recent Publications</h4>
+							<ul>
+								<li><a href="/self-publish/template/yourtown-community-profile-front-cover/customize/11/">Yourtown Community Profile</a></li>
+								<li><a href="#">Custom Publication #2</a></li>
+								<li><a href="#">Custom Publication #3</a></li>
+							</ul>
+							<p><a href="#">View All Publications</a></p>
+						</div>
+					</div>
+				</div>
+				
+{% endblock %}
+</div>
+{% block extra_body_base %}
+    {% block extra_body %}
+    {% endblock %}
+{% endblock %}

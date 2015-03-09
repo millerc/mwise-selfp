@@ -1,0 +1,59 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}
+			{% block content %}
+				<div class="myaccount-sub">
+					<div style="margin:6px;">
+						<h3>Choose from Library</h3>
+						{% if fileblock %}<p><em><small>Current file:</small> {{ fileblock.file }}</em></p>{% endif %}
+						{% if form %}<p><form>{{ form }}&nbsp;<button type="submit" name="submit" value="filter" class="css3button">Filter</button></form></p>{% endif %}
+					</div>
+					<div>
+						{% if images %}
+						<table>
+							<tr>
+								{% for image in images %}
+								<td style="padding:8px;" align="center">
+									{% thumbnail image.content "120x120" crop="center" as im %}
+									<img src="{{ im.url }}" style="margin:{{ im|margin:"120x120" }}"/>
+									<form method="POST">{% csrf_token %}
+										<input type="hidden" name="image_id" value="{{ image.id }}" />
+										<button type="submit" name="submit" value="select" class="css3button" style="margin-top:3px;">Select Image</button>
+									</form>
+									{% empty %}
+										<small>Thumbnail missing {{ image }}</small>
+									{% endthumbnail %}
+								</td>{% if forloop.revcounter > 1 %}{% cycle '' '' '' '' '</tr><tr>' %}{% endif %}
+								{% endfor %}
+						</table>
+						{% endif %}
+						{% if files %}
+						<table cellspacing="10">
+							<tr><th>&nbsp;</th><th align="left">Filename</th><th align="left">Size</th></tr>
+							{% for file in files %}
+							    <tr>
+							    	<td>
+							    		<form method="POST">{% csrf_token %}
+											<input type="hidden" name="file_id" value="{{ file.id }}" />
+											<button type="submit" name="submit" value="select" class="css3button" style="margin-top:3px;">Select File</button>
+										</form>
+									</td>
+									<td>{{ file.filename }}</td>
+							    	<td><small>{{ file.content.size|filesizeformat }}</small></td>
+								</tr>
+							{% endfor %}
+						</table>
+						{% endif %}
+					</div>
+				</div>
+				<p class="clear"></p>
+			{% endblock content %}
+			{% block sidebar %}
+			<div id="sidebar">
+				<div id="browse-sub">
+				{% include "selfpublish/sidebar/account.html" %}
+				{% include "selfpublish/sidebar/layouts.html" %}
+				{% include "selfpublish/sidebar/current_layout.html" %}
+				{% include "selfpublish/sidebar/resources.html" %}
+				</div>
+			</div>
+			{% endblock sidebar %}

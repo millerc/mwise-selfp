@@ -1,0 +1,87 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}{% load humanize %}
+			{% block content %}
+				<div class="feature-sub">
+					<div class="content flyer">
+						<div class="product-preview">
+							{% thumbnail theme.coverdesign.preview "250x325" as im %}
+							<img src="{{ im.url }}" alt="{{ theme.name }}" />
+							{% endthumbnail %}
+						</div>
+						<div class="product-desc">
+							{% if bycompare or next %}
+								<h4>You selected a {{ pagecount }}-page book.</h4>
+							{% else %}
+								<h4>Based on your membership,<br /> we recommend a {{ pagecount }} page book.</h4>
+							{% endif %}
+							<ul>
+								<li class="title">Your book will include:</li>
+								<li class="desc">1 Page Table of Contents</li>
+								<li class="desc">{{ pagecount.minimum_articles }}&ndash;{{ pagecount.maximum_articles }} articles of your choice</li>
+								<li class="desc">{{ pagecount.advertisements }} Page{{ pagecount.advertisements|pluralize }} for Premium Ad spaces</li>
+								<li class="desc">Up to {{ pagecount.listings }} Preferred Business Listings</li>
+								<li class="desc">Generates ${{ pagecount.revenue|intcomma }} in potential revenue</li>
+							</ul>
+							<br />
+							{% if next %}
+							<form action="https://sandbox.google.com/checkout/api/checkout/v2/checkoutForm/Merchant/708745212384528" id="BB_BuyButtonForm" method="post" name="BB_BuyButtonForm" target="_top">
+								<input name="item_name_1" type="hidden" value="Out of the Box publication setup fee"/>
+								<input name="item_description_1" type="hidden" value="{{ pagecount }} pages, ID: {{ pub.id }}"/>
+								<input name="item_quantity_1" type="hidden" value="1"/>
+								<input name="item_price_1" type="hidden" value="{{ pagecount.setup_fee }}"/>
+								<input name="item_currency_1" type="hidden" value="USD"/>
+								<input name="shopping-cart.items.item-1.digital-content.description" type="hidden" value="Use the link below to begin building your publication."/>
+								<input name="shopping-cart.items.item-1.digital-content.key" type="hidden" value="{{ pagecount.encrypted_key }}"/>
+								<input name="shopping-cart.items.item-1.digital-content.key.is-encrypted" type="hidden" value="true"/>
+								<input name="shopping-cart.items.item-1.digital-content.url" type="hidden" value="http://{{ current_site.domain }}/self-publish/publication/setup/{{ pub.setup_key }}/"/>
+								<input name="_charset_" type="hidden" value="utf-8"/>
+								<input alt="" src="https://sandbox.google.com/checkout/buttons/buy.gif?merchant_id=708745212384528&amp;w=117&amp;h=48&amp;style=white&amp;variant=text&amp;loc=en_US" type="image"/>
+							</form>
+							{% else %} 
+							<form action="../select/" method="post">
+								{% csrf_token %}
+								<input type="hidden" name="membership" value="{{ pagecount.id }}" />
+								<button type="submit" name="next" value="next" class="css3button">Next</button>&nbsp;
+							<a href="../compare-book-sizes/">
+								<button type="button" name="" value="" class="css3button">Choose another size</button>
+							</a>
+							</form>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+				<div class="carousel-sub">
+					<!-- "previous page" action -->
+					<a class="clprev browse left"></a> 
+					<!-- root element for scrollable -->
+					<div class="scrollable-sub">
+						<!-- root element for the items -->
+						<div class="items">{% spaceless %}
+							<div>
+								{% for design in theme.spreaddesign_set.all %}
+									{% thumbnail design.preview "700x454" as im %}
+										<a onclick="$().jOverlay({url:'{{ im.url }}', imgLoading : '{{ STATIC_URL }}m/demo/ajax-loader.gif'});">
+									{% endthumbnail %}
+									{% thumbnail design.preview "185x122" as im %}
+										<img src="{{ im.url }}" style="margin:{{ im|margin:"185x122" }}" alt="{{ design }}"</a>
+									{% endthumbnail %}
+									{% if forloop.revcounter > 1 %}{% cycle '' '' '</div><div>' %}{% endif %}
+								{% endfor %}
+							</div>
+						</div>{% endspaceless %}
+					</div>
+					<!-- "next page" action -->
+					<a class="clnext browse right"></a>
+					<!-- wrapper for navigator elements -->
+					<div class="navi"></div>
+				</div>
+				<p class="clear"></p>
+			{% endblock content %}
+			{% block sidebar %}
+			<div id="sidebar">
+				<div id="browse-sub">
+				{% include "selfpublish/sidebar/account.html" %}
+				{% include "selfpublish/sidebar/resources.html" %}
+				</div>
+			</div>
+			{% endblock sidebar %}

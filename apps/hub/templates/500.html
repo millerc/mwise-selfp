@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>CommunityLink // 500 - Error</title>
+    <link href="/chamber-services/css/main.css" rel="stylesheet" type="text/css" />
+    
+</head>
+<body>
+<div id="wrapperBg">
+	<div id="wrapper">
+		<?php include('inc/header.php'); ?>
+			<div id="contentArea">
+				<div id="purpleArea">
+					<div id="leftCol"><h1>500</h1><div class="content"><span class="openingSentence">Ahh, sorry.</span> Looks like we have a problem.</div></div>
+					
+				</div>
+				<div id="content">
+					<div id="rightCol-full"><h2>Whoops!</h2><p>
+Really sorry, but it looks like we have an internal issue. We frequently check our error logs and will be looking into the issue shortly. Return to the page you came from <a href="javascript: history.go(-1)">here.</a></b></div>
+				<p align="right">{% ssi /var/www/vhosts/communitylink.com/httpdocs/chamber-services/inc/webchatinc.txt %}</p>
+				</div>
+				<div id="footerBar"></div>
+				<?php include('inc/footer.php'); ?>
+			</div>
+	</div>
+</div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-4459302-1");
+pageTracker._trackPageview();
+} catch(err) {}</script></body>
+</html>

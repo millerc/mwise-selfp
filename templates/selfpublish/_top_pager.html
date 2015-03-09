@@ -1,0 +1,39 @@
+{% if pager.paginator.num_pages > 1 %}
+<div class="pagination">
+{% if pager.number > 1 %}
+    <a href="?{{ queries.urlencode }}&amp;page=1">
+    {% comment %}<img src="{{ STATIC_URL }}pinax/img/silk/icons/control_start{% if pager.number > 1 %}_blue{% endif %}.png" alt="First" />{% endcomment %}
+    |&laquo; First</a>
+    {% else %}
+    |&laquo; First
+{% endif %}
+|
+{% if pager.has_previous %}
+    <a href="?{{ queries.urlencode }}&amp;page={{ pager.previous_page_number }}">
+    {% comment %}<img src="{{ STATIC_URL }}pinax/img/silk/icons/control_rewind_blue.png" alt="Previous" />{% endcomment %}
+    &lt; Previous</a>
+    {% else %}
+    &lt; Previous
+    {% comment %}<img src="{{ STATIC_URL }}pinax/img/silk/icons/control_rewind.png" alt="Previous" />{% endcomment %}
+{% endif %}
+| 
+Page {{ pager.number }} of {{ pager.paginator.num_pages }} 
+| 
+{% if pager.has_next %}
+	<a href="?{{ queries.urlencode }}&amp;page={{ pager.next_page_number }}">
+	{% comment %}<img src="{{ STATIC_URL }}pinax/img/silk/icons/control_fastforward_blue.png" alt="Next" />{% endcomment %}
+	Next &gt;</a>
+	{% else %}
+	Next &gt;
+	{% comment %}<img src="{{ STATIC_URL }}pinax/img/silk/icons/control_fastforward.png" alt="Next" />{% endcomment %}
+{% endif %}
+|
+{% if pager.number < pager.paginator.num_pages %}
+	<a href="?{{ queries.urlencode }}&amp;page={{ pager.paginator.num_pages }}">
+	{% comment %}<img src="{{ STATIC_URL }}pinax/img/silk/icons/control_end_blue.png" alt="Last" />{% endcomment %}
+	Last &raquo; |</a>
+	{% else %}
+	Last &raquo; |
+{% endif %}
+</div>
+{% endif %}

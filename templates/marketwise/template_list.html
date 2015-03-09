@@ -1,0 +1,30 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load ifsetting_tag %}
+{% load thumbnail %}
+
+{% block head_title %}Marketwise : {% if free_templates %}Free {% else %}All {% endif %}Templates{% endblock %}
+
+{% block extra_head_base %}
+    {% block extra_head %}
+    {% endblock %}
+{% endblock %}
+
+
+{% block body %}
+				<div class="feature-sub templates">
+	            <p style="margin:10px;"><big>{% if free_templates %}{% if filtered %}Matching {% endif %}Free {% else %}{% if filtered %}Matching {% else %}All {% endif %}{% endif %}Templates</big> ({{ templates.count }})</p>
+                    {% include "_top_pager.html" %}
+					<div>
+					{% for template in pager.object_list %}
+						<a href="{{ template.get_absolute_url }}">{% thumbnail template.preview "109x141" as im %}<img src="{{ im.url }}" style="margin:{{ im|margin:"109x141" }}" alt="{{ template }}" title="<h3>{{ template }}</h3>{{ template.description|linebreaksbr }}" />{% endthumbnail %}</a>{% if forloop.revcounter > 1 %}{% cycle '' '' '' '' '</div><div>' %}{% endif %}{% endfor %}
+					</div>
+                    {% include "_bottom_pager.html" %}
+				</div>
+{% endblock %}
+
+{% block extra_body_base %}
+    {% block extra_body %}
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,13 @@
+<p class="pagination">
+{% if pager.paginator.num_pages > 1 %}
+{% for p in pager.paginator.page_range %}
+    {% if pager.number = p %}
+    {% if p > 1 %} &middot; {% endif %}<big> [ {{ p }} ] </big>{% if p < pager.paginator.num_pages %} &middot; {% endif %}
+    {% else %}
+    <a href="?page={{ p }}">{% if p > 1 %} &middot; {% endif %}{{ p }}{% if p < pager.paginator.num_pages %} &middot; {% endif %}</a>
+    {% endif %}
+{% endfor %}
+{% else %}
+&nbsp;
+{% endif %}
+</p>

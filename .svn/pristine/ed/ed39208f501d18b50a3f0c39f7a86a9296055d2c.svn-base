@@ -1,0 +1,53 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}
+			{% block content %}
+				<div class="feature-full">
+					<div id="scrollbar1">
+						<div class="scrollbar">
+							<div class="track">
+								<div class="thumb">
+									<div class="end"></div>
+								</div>
+							</div>
+						</div>
+						<div class="viewport">
+							<div class="overview">
+								<ul>
+									{% for theme in themes %}
+										{% thumbnail theme.coverdesign.preview "137x177" as im %}
+										<li>
+											<a href="{{ theme.get_absolute_url }}">
+												<img src ="{{ im.url }}">
+											</a>
+										</li>
+										{% endthumbnail %}
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					</div>	
+				</div>
+				<div id="callout-full">
+					<div class="callouts clickable" url="themes/">
+						<h2>Marketwise Promotional Toolbox</h2>
+						<p>Ten New MarketWise Promotional Toolbox design templates released Ten New MarketWise Promotional...</p>
+						<p class="callout-link"><a href="home.php">Learn More</a></p>
+					</div>
+					<div class="callouts clickable">
+						<h2>Member Marketwise</h2>
+						<p>Ten New MarketWise Promotional Toolbox design templates released http://cmln k.com/1t Ten New MarketWise Promotional Toolbox...</p>
+						<p class="callout-link"><a href="#">Learn More</a></p>
+					</div>
+					<div class="callouts clickable">
+						<h2>Out of the Box Publications</h2>
+						<p>Ten New MarketWise Promotional Toolbox design templates released http://cmln k.com/1t Ten New MarketWise Promotional Toolbox...</p>
+						<p class="callout-link"><a href="#">Earn More</a></p>
+					</div>
+					<div class="callouts clickable">
+						<h2>Watch the Video</h2>
+						<p>Ten New MarketWise Promotional Toolbox design templates released http://cmln k.com/1t Ten New MarketWise Promotional...</p>
+						<p class="callout-link"><a href="#">Earn More</a></p>
+					</div>
+					<p class="clear"></p>
+				</div>
+			{% endblock content %}

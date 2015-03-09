@@ -1,0 +1,11 @@
+{% spaceless %}
+
+{% regroup object_list by state as state_list %}
+
+<select id="states" size="9" onchange="fileBuilder(this.id, this.value)">
+{% for state in state_list %}
+    <option class="{% cycle 'evenoption' 'oddoption' %}" value="/columnbrowser/states/{{ state.grouper|slugify }}">{{ state.grouper }}</option>
+{% endfor %}
+</select>
+
+{% endspaceless %}

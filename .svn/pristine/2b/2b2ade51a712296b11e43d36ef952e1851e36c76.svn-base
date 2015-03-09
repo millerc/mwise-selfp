@@ -1,0 +1,39 @@
+{% spaceless %}
+{% with places_list.count as total %}
+<select id="communities" size="9" class="myinputstyles" onchange="fileBuilder(this.id, this.value)">
+	{% for place in places_list %}
+		<option class="{% cycle 'evenoption' 'oddoption' %}" value="/{{ place.slug }}/">{{ place.name }}</option>
+	{% endfor %}
+	{% if total < 2 %}
+		<option class="oddoption" value="2"> </option>
+	{% endif %}
+	{% if total < 3 %}
+		<option class="evenoption" value="3"> </option>
+	{% endif %}
+	{% if total < 4 %}
+		<option class="oddoption" value="4"> </option>
+	{% endif %}
+	{% if total < 5 %}
+		<option class="evenoption" value="5"> </option>
+	{% endif %}
+	{% if total < 6 %}
+		<option class="oddoption" value="6"> </option>
+	{% endif %}
+	{% if total < 7 %}
+		<option class="evenoption" value="7"> </option>
+	{% endif %}
+	{% if total < 8 %}
+		<option class="oddoption" value="8"> </option>
+	{% endif %}
+	{% if total < 9 %}
+		<option class="evenoption" value="9"> </option>
+	{% endif %}
+	{% if total < 10 %}
+		<option class="oddoption" value="10"> </option>
+	{% endif %}
+	{% if total < 11 %}
+		<option class="evenoption" value="11"> </option>
+	{% endif %}
+</select>
+{% endwith %}
+{% endspaceless %}

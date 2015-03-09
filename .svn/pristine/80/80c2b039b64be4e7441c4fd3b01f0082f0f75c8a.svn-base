@@ -1,0 +1,230 @@
+{% load thumbnail %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta name="keywords" content="chamber of commerce, custom publishing, communitylink, craig williams creative"/>
+		<meta name="description" content="CommunityLink provides publishing services to the Chamber of Commerce industry." />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		
+		<title>{% block head_title %}Out of the Box{% endblock head_title %}</title>
+		
+		<link rel="stylesheet" href="{{ STATIC_URL }}css/style.css" type="text/css" />
+		<link rel="stylesheet" href="{{ STATIC_URL }}js/jquery-ui-1/css/custom-theme/jquery-ui-1.8.14.custom.css" type="text/css" />
+		
+		<script src="{{ STATIC_URL }}js/jquery-1.6.2.min.js" type="text/javascript"></script>
+		<script src="http://cdn.jquerytools.org/1.2.5/full/jquery.tools.min.js" type="text/javascript"></script>
+		<script src="{{ STATIC_URL }}js/jquery.cookie.js" type="text/javascript"></script>
+		<script src="{{ STATIC_URL }}js/jquery.tinyscrollbar.min.js" type="text/javascript"></script>
+		<script src="{{ STATIC_URL }}js/jquery-ui-1/js/jquery-ui-1.8.14.custom.min.js" type="text/javascript"></script>
+		<script src="{{ STATIC_URL }}js/jquery.joverlay.min.js" type="text/javascript"></script>
+		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				//var menu_h4_account_class = $.cookie();
+				//alert(menu_h4_account_class);
+
+				// NAV EXPAND AND CONTRACT
+				var menu_h4_account_state = $.cookie('div.menu_h4_account');
+				if(menu_h4_account_state == "hide") {
+				  $('#menu_h4_account_div').removeClass("open");
+				  $('#menu_h4_account').removeClass("open");
+				}
+				var menu_h4_production_state = $.cookie('div.menu_h4_production');
+				if(menu_h4_production_state == "hide") {
+				  $('#menu_h4_production_div').removeClass("open");
+				  $('#menu_h4_production').removeClass("open");
+				}
+				var menu_h4_page_state = $.cookie('div.menu_h4_page');
+				if(menu_h4_page_state == "hide") {
+				  $('#menu_h4_page_div').removeClass("open");
+				  $('#menu_h4_page').removeClass("open");
+				}
+				var menu_h4_resources_state = $.cookie('div.menu_h4_resources');
+				if(menu_h4_resources_state == "hide") {
+				  $('#menu_h4_resources_div').removeClass("open");
+				  $('#menu_h4_resources').removeClass("open");
+				}
+				$(".menu_segment > h4").click(function() {
+					$(this).toggleClass("open");
+					var thisDiv = "div." + $(this).attr('id');
+					$(thisDiv).slideToggle().toggleClass("open");
+					if($(thisDiv).hasClass("open")) {
+						$.cookie(thisDiv, "show", {path:'/'});
+					}
+					else {
+						$.cookie(thisDiv, "hide", {path:'/'});
+					}
+				});
+
+				// NAV EXPAND AND CONTRACT
+				//$(".menu_segment > h4").click(function() {
+				//  $(this).toggleClass("open");
+				//  var thisDiv = "div." + $(this).attr('id');
+				//  $(thisDiv).slideToggle().toggleClass("open");
+				//});
+				
+				// SELECT ALL/NONE LINKS
+				$(".checkall").click(function() {
+					$(this).parent("li").siblings("li").children("input").attr('checked', true);
+				});
+				$(".checknone").click(function() {
+					$(this).parent("li").siblings("li").children("input").attr('checked', false);
+				});
+				
+				// PROGRESS BARS
+				$(".progressbar").progressbar({
+					value: $(this).html()
+				});
+				$("div.progressbar").each (function () {
+					var element = this;
+					$(element).progressbar({
+						value: parseInt($(element).attr("rel"))
+					});
+				});
+				
+				// DISMISS ANNOUNCEMENT
+				$(".dismiss_announcement").click(function() {
+					$(this).parent("p").parent("div").parent("div").fadeOut();
+				});
+				
+			});
+		</script>
+		
+		<script type="text/javascript">
+			$(document).ready(function() { 
+				$(".scrollable").scrollable({size: 7, next: ".clnext", prev: ".clprev"}).navigator({naviItem: 'img'});
+				$(".scrollable-sub").scrollable({size: 3, next: ".clnext", prev: ".clprev"}).navigator({naviItem: 'img'});
+				$(".scrollable-spread").scrollable({size: 1, next: ".clnext", prev: ".clprev"}).navigator({naviItem: 'img'}); 
+				$(".scrollable-spread-medium").scrollable({size: 1, next: ".clnext", prev: ".clprev"}).navigator({naviItem: 'img'}); 
+				$(".featured-rotate").scrollable({circular: true}).autoscroll({interval: 7000}); 
+				$(".navi > img").attr('src', '{{ STATIC_URL }}m/navi_active.png');
+				$("div.clickable").click(function(){window.location = $(this).attr("url");});
+				$(".scrollable img[title]").tooltip({
+				// tweak the position
+				offset: [50, 2],
+				// use the "slide" effect
+				effect: 'slide'
+				// add dynamic plugin with optional configuration for bottom edge
+				}).dynamic({ bottom: { direction: 'down', bounce: true } });
+			});
+		</script>
+		
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$(".slidingDiv").hide();
+				$(".show_hide").show();
+				$('.show_hide').click(function(){
+					$(".slidingDiv").slideToggle();
+				});
+			});
+		</script>
+		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("a[rel]").overlay({
+					mask: {
+					color: '#000',
+					speed: '0',
+					},
+				closeOnClick: false
+				});
+			});
+		</script>
+		<script>
+			$(document).ready(function() { 
+			    $('#demo2').click(function() { 
+			        $.blockUI({ css: { 
+			            border: 'none', 
+			            padding: '15px', 
+			            backgroundColor: '#000', 
+			            '-webkit-border-radius': '10px', 
+			            '-moz-border-radius': '10px', 
+			            opacity: .5, 
+			            color: '#fff' 
+			        } }); 
+			 
+			        setTimeout($.unblockUI, 2000); 
+			    }); 
+			}); 
+		</script>
+
+		{% block extrahead %}{% endblock extrahead %}
+
+	</head>
+	
+	<body>
+		<div id="wrapper">
+			<div id="header">
+				<a href="#"><img id="clinklogo" src="{{ STATIC_URL }}m/clink_logo.png" alt="Home" border="0"/></a>
+				<ul id="nav">
+					<li><a href="#">Cloud</a></li>
+					<li><a href="#">Chamber Services</a></li>
+					<li><a href="#">Marketwise</a></li>
+					<li><a href="#">Out of the Box Media</a></li>
+					<li><a href="#">Contact Us</a></li>
+				</ul>
+			</div>
+			<div class="subheader">
+				<a href="/self-publish/"><div id="otblogo"></div></a>
+				<div id="subhead-right">
+					<div id="socialicons">
+						<a href="http://www.youtube.com/communitylink" id="youtube" class="sociallink"></a>
+						<a href="http://www.linkedin.com/companies/communitylink" id="linkedin" class="sociallink"></a>
+						<a href="http://twitter.com/communitylink" id="twitter" class="sociallink"></a>
+						<a href="http://www.facebook.com/pages/CommunityLink/115032009134" id="facebook" class="sociallink"></a>
+						<a href="feed://twitter.com/statuses/user_timeline/17877697.rss" id="rss" class="sociallink"></a>
+						<a href="http://www.communitylink.com/chamber-services/contact.php" id="contactus"></a>
+						<a href="http://www.communitylink.com/zone" id="clientzone"></a>
+					</div>
+					<div id="subhead-actions">
+						<form class="searchform">
+							<input class="searchfield" type="text" />
+							<input class="searchbutton" type="button" value="Go" />
+						</form>
+						<p>Search</p>
+					</div>
+				</div>
+			</div>
+			<!-- CONTENT -->
+			<div id="content">
+			{% block messages %}			
+			{% if messages %}
+				{% for message in messages %}
+				<div class="infobox {{ message.tags }}">
+					<img src="{{ STATIC_URL }}m/{{ message.tags }}_icon.gif" alt="announcement" />
+					<div class="infoboxtext">
+						<h3>{{ message.tags }}</h3>
+						<p>{{ message|safe }}</p>
+					</div>
+				</div>
+				{% endfor %}
+			{% endif %}
+			{% endblock messages %}
+			{% block content %}
+			{% endblock content %}
+			</div>
+			<!-- END CONTENT -->
+			<!-- SIDEBAR -->
+			{% block sidebar %}
+			{% endblock sidebar %}
+			<!-- END SIDEBAR -->
+			<p class="clear"></p>
+			<div id="footer">
+				<p>&copy;2012 CommunityLink, a division of Craig Williams Creative, Inc.</p>
+			</div>
+			
+			{% block extrabody %}{% endblock extrabody %}
+		
+		</div><!-- id="wrapper" -->
+		<script src="{{ STATIC_URL }}js/jquery.easing.1.3.js"></script>
+		<script src="{{ STATIC_URL }}js/stickysidebar.jquery.js"></script>
+		<script>
+	  	$(function () {
+			$("#sidebar").stickySidebar({
+				timer: 400
+	  		, easing: "easeInOutQuad"
+			});
+	  	});
+		</script>
+		</body>
+</html>

@@ -1,0 +1,71 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}{% load linebreaksli %}
+			{% block content %}
+				<div class="myaccount-sub">
+					<div class="queue_item">
+						<div class="queue_image" style="text-align:center;">
+							{% thumbnail publication.theme.coverdesign.preview "126x163" as im %}<img src="{{ im.url }}" />{% endthumbnail %}
+							<a href="{{ publication.cover.get_absolute_url }}change-layout/"><button type="button" name="" value="" class="css3button" style="margin-top:6px;">Change Cover</button></a>
+						</div>
+						<div class="queue_item_content">
+							<h3>{{ publication.cover }}</h3>
+							<ul>
+								<li>
+									<a href="{{ publication.cover.get_absolute_url }}">
+										<button type="button" name="" value="" class="css3button download_now">Customize</button>
+									</a>
+									<div id="progressbar1" class="progressbar" rel="{{ publication.cover.blocks_filled_percent|default_if_none:"5" }}"></div>
+									<div class="clear"></div>
+								</li>
+								<li>Cover Contents:<span><img src="{{ STATIC_URL }}m/info_disc.png"></span></li>
+								<li>{{ publication.cover.cover_template.blocks_text|linebreaksli }}</li>
+							</ul>
+						</div>
+					</div>
+					{% for spread in publication.spread_set.all %}
+					<div class="queue_item">
+						<div class="queue_image" style="text-align:center;">
+							{% thumbnail spread.design.preview "175x120" as im %}<img style="margin:{{ im|margin:"175x120" }}" src="{{ im.url }}" />{% endthumbnail %}
+							{% if not spread.spread_template.type.name == "Advertising" %}
+								<a href="{{ spread.get_absolute_url }}change-layout/">
+									<button type="button" name="" value="" class="css3button" style="margin-top:6px;">Change Layout</button>
+								</a>
+							{% endif %}
+						</div>
+						<div class="queue_item_content">
+							<h3>{% if spread.recto %}Spread #{{ spread.sequence }}{% else %}Back Cover{% endif %} (Page{% if spread.recto %}s{% endif %} {{ spread.verso }}{% if spread.recto %}&ndash;{{ spread.recto }}{% endif %}) &mdash; {{ spread.spread_template.type }}</h3>
+							{% if spread.spread_template.type.name == "Advertising" %}
+								<ul>
+									<li>Advertising sales may begin upon completion of editorial customizations.</li>
+								</ul>
+							{% else %}
+								<ul>
+									<li>
+										<a href="{{ spread.get_absolute_url }}">
+											<button id="demo2" type="button" name="" value="" class="css3button download_now">Customize</button>
+										</a>
+										<div id="progressbar1" class="progressbar" rel="{{ spread.progress_bar }}"></div>
+										<div class="clear"></div>
+									</li>
+								</ul>
+								<ul>
+									<li>Layout Contents:<span><img src="{{ STATIC_URL }}m/info_disc.png"></span></li>
+									<li>{{ spread.spread_template.blocks_text|linebreaksli }}</li>
+								</ul>
+							{% endif %}
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+				<p class="clear"></p>
+				<p class="clear"></p>
+			{% endblock content %}
+			{% block sidebar %}
+			<div id="sidebar">
+				<div id="browse-sub">
+				{% include "selfpublish/sidebar/account.html" %}
+				{% include "selfpublish/sidebar/layouts.html" %}
+				{% include "selfpublish/sidebar/resources.html" %}
+				</div>
+			</div>
+			{% endblock sidebar %}

@@ -1,0 +1,17 @@
+<html>
+	<head>
+		<title>PayPage Transaction Result</title>
+	</head>
+	<body>
+		<h1>PayPage Transaction Result</h1>
+		<p>
+			{{ ad }} Something went wrong. Here are the transaction details:
+		</p>
+		<dl>
+		{% for key, value in t.items %}
+			<dt>{{ key }}</dt>
+			<dd>{{ value }}</dd>
+		{% endfor %}
+		</dl>
+	</body>
+</html>

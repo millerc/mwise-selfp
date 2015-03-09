@@ -1,0 +1,9 @@
+Dear {{ lead.contact_name }},
+
+The {{ lead.publication }} soon will be published. This would be a great opportunity to create exposure for {{ lead.organization }}. There are sponsorship opportunities ranging from business listings to full-color, full-page advertisements. 
+
+Please visit our site for additional information and to reserve your space today. 
+
+http://{{ current_site.domain }}{% url selfpublish.views.lead_invite_accept lead.invitation_code %}
+
+Thanks.

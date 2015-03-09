@@ -1,0 +1,41 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}{% load linebreaksli %}
+			{% block content %}
+				<div class="feature-full">
+					<div id="salesphase">
+						<h3><small><sup>SPONSORSHIP ENGINE</sup></small><br />
+						{{ publication }}</h3>
+							<div class="salesoptions">
+								<ul>
+									{% include "selfpublish/sponsor_navbar.html" %}
+								</ul>
+							</div>
+							<div class="content flyer">
+								<div class="product-preview-sales">
+									{% thumbnail publication.theme.coverdesign.preview "250x325" as im %}
+										<img src="{{ im.url }}" alt="{{ publication.title }}" />
+									{% endthumbnail %}
+								</div>
+								<div class="product-desc sales">
+									<h3><small><sup><em>Sponsorship opportunities</em></sup></small><br />{{ publication.title }}</h3>
+									<ul>
+										<li class="title">Publication Facts</li>
+										<li class="desc">5,000 copies</li>
+										<li class="desc">Two-year shelf life</li>
+										<li class="desc">Targeted distribution</li>
+										<li class="desc">Available in print, tablet and mobile</li>
+									</ul>
+								</div>
+								<div class="product-desc">
+									<ul>
+										<li class="title">Sponsorship Benefits</li>
+										<li class="desc">Affordable marketing exposure</li>
+										<li class="desc">Copies of the publication for your distribution</li>
+									</ul>
+								</div>
+							</div>
+						<br/><p class="clear"></p>
+					</div>
+					<p class="clear"></p>
+				</div>
+			{% endblock content %}

@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title>Hub Stats</title>
+</head>
+<body>
+  <h1>Hub Stats</h1>
+      <ul>
+        <li>Total Census Designated Places (CDPs): {{ totalplaces }}</li>
+        <li>Distinct places with links: {{ linkplaces }} <small>(As of: one day ago {{ linkplacesOne }}, seven days ago: {{ linkplacesSeven }}, 30 days ago: {{ linkplacesThirty }})</small></li>
+        <li>Distinct places with featured links: {{ featplaces }}</li>
+        <li>Places with links where no links are featured: {{ ufeatplaces }}</li>
+        <li>Number of Listings of published Links: {{ totalListings }}</li>
+        <li>Number of Listings of published Links today: {{ listingsToday }}</li>
+        <li>Number of Listings of published Links in past seven days: {{ listingsSeven }}</li>
+        <li>Number of Listings of published Links in past 30 days: {{ listingsThirty }}</li>
+      </ul>
+<p><em>Note: A "Listing" represents the relationship of a Link to a Place, as a link can be associated with more than one place.</em></p>
+</body>
+</html>
+

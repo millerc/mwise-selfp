@@ -1,0 +1,42 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}{% load linebreaksli %}{% load humanize %}
+			{% block content %}
+				<div class="feature-full">
+					<div id="salesphase">
+						<h3><small><sup>SPONSORSHIP ENGINE</sup></small><br />
+						{{ publication }}</h3>
+							<div id="advertiserlist"><h2>Upload premium sponsor content</h2></div>
+								<table border="0">
+								<tbody>
+									<tr>
+										<th>{{ displayad.lead }}</th><th><small>{{ displayad }}</small></th>
+									</tr>
+									<tr>
+										<td colspan="2">Use this form to upload content for your premium sponsorship.<br /><br />
+											<em>Specifications:</em><br />
+													&middot; Size: 7.333" x 9.833"<br />
+													&middot; PDF, Adobe InDesign, QuarkXPress, etc.<br />
+													&middot; ZIP/archive multiple files
+										</td>
+									</tr>
+										<td colspan="2">
+											<div class="form">
+												<form method="post" enctype="multipart/form-data">{% csrf_token %}
+												{{ form.content }}								
+												<button type="submit" name="save" value="save" class="css3button">Upload</button>
+												<a href="{% url dashboard_home %}">
+													<button type="button" name="cancel" value="cancel" class="css3button">Cancel</button>
+												</a>
+												</form>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+								</table>
+							</div>
+						</div>
+						<br/><p class="clear"></p>
+					</div>
+					<p class="clear"></p>
+				</div>
+			{% endblock content %}

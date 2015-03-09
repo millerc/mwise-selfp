@@ -1,0 +1,12 @@
+Place: {{ place }}
+
+Title: {{ link }}
+URL: {{ link.url }}
+Description: {{ link.description }}
+Category: {{ category }}
+
+Admin this link: http://communitylink.com/admin/hub/link/{{ link.id }}
+
+View all unpublished: http://communitylink.com/admin/hub/link/?published__exact=0
+
+Submitted via IP: {{ remote_addr }} (May be spoofed.)

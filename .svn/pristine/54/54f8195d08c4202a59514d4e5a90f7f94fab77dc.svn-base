@@ -1,0 +1,53 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}{% load linebreaksli %}{% load humanize %}
+			{% block content %}
+				<div class="feature-full">
+					<div id="salesphase">
+						<h3><small><sup>SPONSORSHIP ENGINE</sup></small><br />
+						{{ publication }}</h3>
+							<div id="advertiserlist"><h2>Edit Business Listing</h2></div>
+								<table border="0">
+									<tbody>
+										<tr><th>{{ linead }}</th></tr>
+										<tr>
+											<td>
+												<p>
+													{% thumbnail linead.logo "80x80" as im %}
+													<img src="{{ im.url }}" alt="logo" />{% endthumbnail %}
+												</p>
+												{% for line in linead.adline_set.all %}
+													<p><strong>{{ line.text }}</strong></p>
+												{% empty %}
+													<p><em>Use the form below to edit your listing.</em></p>
+												{% endfor %}
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="form">
+													<form method="post" enctype="multipart/form-data">
+														{% csrf_token %}
+														<p>Category: {{ form.category }}</p>
+														<p>Logo: {{ form.logo }} 
+															<ul>{{ form.logo.errors }}</ul>
+														</p>
+														{{ formset.management_form }}
+														<p><em>(Max 50 characters per line; checkbox deletes; right column sets order)</em></p>
+														{% for form in formset %}
+															{{ form.id }}
+																<p>Line {{ forloop.counter }}: {{ form.text }} {{ form.text.errors }} {{ form.DELETE }} {{ form.DELETE.errors }} {{ form.ORDER }} {{ form.ORDER.errors }}</p>
+														{% endfor %}
+														<button type="submit" name="save" value="save" class="css3button">Save</button>
+													</form>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<br/><p class="clear"></p>
+					</div>
+					<p class="clear"></p>
+				</div>
+			{% endblock content %}

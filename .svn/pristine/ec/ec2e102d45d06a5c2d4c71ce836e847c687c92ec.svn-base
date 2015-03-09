@@ -1,0 +1,26 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}{% load linebreaksli %}{% load humanize %}
+			{% block content %}
+				<div class="feature-full">
+					<div id="salesphase">
+						<h3><small><sup>SPONSORSHIP ENGINE</sup></small><br />
+						{{ publication }}</h3>
+							<div class="salesoptions">
+								<ul>
+									{% include "selfpublish/sponsor_navbar.html" %}
+								</ul>
+							</div>
+							<div id="advertiserlist"><h2>Preferred Business Listings</h2></div>
+								<table border="0">
+								<tbody>
+								<tr><td><p>List your organization with up to 10 lines of text and logo. <a href="reserve/"><button id="demo2" type="button" name="reserve" value="reserve" class="css3button">Reserve Now</button></a>{% if listings_available < 10 %}<em>Only {{ listings_available }} left!</em>{% endif %}</p>
+								<img src="{{ STATIC_URL }}/m/listing.png" width="555" height="628"/></td></tr>
+								</tbody>
+								</table>
+							</div>
+						</div>
+						<br/><p class="clear"></p>
+					</div>
+					<p class="clear"></p>
+				</div>
+			{% endblock content %}

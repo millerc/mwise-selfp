@@ -1,0 +1,44 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}{% load linebreaksli %}{% load humanize %}
+			{% block content %}
+				<div class="feature-full">
+					<div id="salesphase">
+						<h3><small><sup>SPONSORSHIP ENGINE</sup></small><br />
+						{{ publication }}</h3>
+							<div class="salesoptions">
+								<ul>
+									{% include "selfpublish/sponsor_navbar.html" %}
+								</ul>
+							</div>
+							<div id="advertiserlist"><h2>Preferred Business Listings</h2></div>
+								<table border="0">
+								<tbody>
+								<tr><td>
+									<h4>Confirm Reservation</h4>
+									{% if new_listing %}
+									<p>Please proceed to Google Checkout to process your payment. Upon completion, you will be directed back to this site to submit content for your listing.</p>
+									<form action="https://sandbox.google.com/checkout/api/checkout/v2/checkoutForm/Merchant/708745212384528" id="BB_BuyButtonForm" method="post" name="BB_BuyButtonForm" target="_top">
+										<input name="item_name_1" type="hidden" value="Business Listing | {{ publication.title }}"/>
+										<input name="item_description_1" type="hidden" value="List your organization with logo and up to 10 lines of text, ID: {{ new_listing.id }}"/>
+										<input name="item_quantity_1" type="hidden" value="1"/>
+										<input name="item_price_1" type="hidden" value="{{ publication.listing_price }}"/>
+										<input name="item_currency_1" type="hidden" value="USD"/>
+										<input name="shopping-cart.items.item-1.digital-content.description" type="hidden" value="Use the link below to begin building your listing."/>
+										<input name="shopping-cart.items.item-1.digital-content.url" type="hidden" value="http://{{ current_site.domain }}/self-publish/listing/setup/{{ new_listing.setup_key }}/"/>
+										<input name="_charset_" type="hidden" value="utf-8"/>
+										<input alt="" src="https://sandbox.google.com/checkout/buttons/buy.gif?merchant_id=708745212384528&amp;w=117&amp;h=48&amp;style=white&amp;variant=text&amp;loc=en_US" type="image"/>
+									</form>
+									{% else %}
+										<p>List your organization with up to 10 lines of text and logo. Cost is ${{ publication.listing_price|intcomma }}. Your reservation will be held while your payment is processed. In the next step you'll be led to Google Checkout to complete the transaction securely. Once paid, you'll be redirected back to this site to provide content for your listing. <form method="post">{% csrf_token %}<button id="demo2" type="submit" name="confirm_reservation" value="confirm_reservation" class="css3button">Confirm Reservation</button></form></p>
+									{% endif %}
+									<img src="{{ STATIC_URL }}/m/listing.png" width="555" height="628"/>
+								</td></tr>
+								</tbody>
+								</table>
+							</div>
+						</div>
+						<br/><p class="clear"></p>
+					</div>
+					<p class="clear"></p>
+				</div>
+			{% endblock content %}

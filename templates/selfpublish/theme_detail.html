@@ -1,0 +1,90 @@
+{% extends "selfpublish/base.html" %}	
+{% load thumbnail %}
+			{% block content %}
+				<div class="feature-full">
+					<div class="content flyer">
+						<div class="product-preview">
+							{% thumbnail theme.coverdesign.preview "250x325" as im %}
+								<img src="{{ im.url }}" alt="{{ theme.name }}" />
+							{% endthumbnail %}
+						</div>
+						<div class="product-desc">
+							<ul>
+								<li class="title">{{ theme.name }}</li>
+								<li class="desc">{{ theme.description }}</li>
+							</ul>
+							<a href="select" class="overlaylink block">
+								<button type="button" name="" value="" class="css3button">Select</button>
+							</a>
+							<br />
+							<ul>
+							    <li class="desc"><small><em>Also available in these colors:</em></small></li>
+							</ul>
+							{% if related_themes %}
+							    {% for rt in related_themes %}
+							        <a href="{{ rt.get_absolute_url }}"><img class="swatches" src="{{ rt.swatch.url }}" /></a>
+								{% endfor %}
+							{% endif %}
+						</div>
+					</div>
+				</div>
+				<div class="carousel-full">
+					<h5></h5>
+					<!-- "previous page" action -->
+					<a class="clprev browse left"></a>
+					<!-- root element for scrollable -->
+					<div class="scrollable-sub">
+						<!-- root element for the items -->
+						<div class="items">{% spaceless %}
+							<div>
+								{% for design in theme.spreaddesign_set.all %}
+									{% thumbnail design.preview "700x454" as im %}
+										<a onclick="$().jOverlay({url:'{{ im.url }}', imgLoading : '{{ STATIC_URL }}m/demo/ajax-loader.gif'});">
+									{% endthumbnail %}
+									{% thumbnail design.preview "185x122" as im %}
+										<img src="{{ im.url }}" style="margin:{{ im|margin:"185x122" }}" alt="{{ design }}"</a>
+									{% endthumbnail %}
+									{% if forloop.revcounter > 1 %}{% cycle '' '' '</div><div>' %}{% endif %}
+								{% endfor %}
+							</div>
+						</div>{% endspaceless %}
+					</div>
+					<!-- "next page" action -->
+					<a class="clnext browse right"></a>
+					<!-- wrapper for navigator elements -->
+					<div class="navi"></div>
+				</div>
+				<div class="carousel-full">
+					<!-- "previous page" action -->
+					<a class="clprev browse left"></a> 
+					<!-- root element for scrollable -->
+					<div class="scrollable">
+						<!-- root element for the items -->
+						<div class="items">{% spaceless %}
+							<div>
+								{% for theme in featured_themes %}
+									{% thumbnail theme.coverdesign.preview "108x141" as im %}
+										<a href="{{ theme.get_absolute_url }}">
+											<img src="{{ im.url }}" style="margin:{{ im|margin:"108x141" }}" alt="{{ theme }}"
+										</a>
+									{% empty %}
+										<a href="{{ theme.get_absolute_url }}">
+											<small>Thumbnail Missing</small>
+										</a>
+									{% endthumbnail %}
+									{% if forloop.revcounter > 1 %}
+										{% cycle '' '' '' '' '' '' '</div><div>' %}
+									{% endif %}
+								{% endfor %}
+							</div>
+						</div>{% endspaceless %}
+					</div>
+					<!-- "next page" action -->
+					<a class="clnext browse right"></a>
+					<!-- wrapper for navigator elements -->
+					<div class="navi"></div>
+				</div>
+				<br/>
+				<p class="clear"></p>
+			{% endblock content %}
+			{% block sidebar %}<p class="clear"></p>{% endblock sidebar %}

@@ -1,0 +1,12 @@
+{% load uni_form_tags %}
+
+<form class="form" method="POST" action="{% url profile_edit %}">
+    {% csrf_token %}
+
+        {{ profile_form }}
+        <div class="form_block">
+            <input type="submit" class="update" value="" />
+            or <a href="{% url marketwise_dashboard %}">cancel</a>
+        </div>
+
+</form>

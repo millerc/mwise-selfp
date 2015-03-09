@@ -1,0 +1,58 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}{% load linebreaksli %}{% load humanize %}
+			{% block content %}
+				<div class="feature-full">
+					<div id="salesphase">
+						<h3><small><sup>SPONSORSHIP ENGINE</sup></small><br />
+						{{ publication }}</h3>
+							<div class="salesoptions">
+								<ul>
+									{% include "selfpublish/sponsor_navbar.html" %}
+								</ul>
+							</div>
+							<div id="advertiserlist"><h2>Premium Advertising</h2></div>
+								<table border="0">
+								<tbody>
+								<!-- Results table headers -->
+								<tr>
+									<th>Description</th>
+									<th>Page</th>
+									<th>Status</th>
+								</tr>
+								{% for ad in ads %}
+								<tr>
+									<td>{{ ad.ad_price_level }}</td>
+									<td>{{ ad.layout.spread.verso }}{% if ad.layout.spread.recto %}&mdash;{{ ad.layout.spread.recto }}{% endif %}</td>
+									<td>{% if ad.display_ad %}{% if ad.display_ad.setup_done %}Sold{% else %}Sale Pending{% endif %}{% else %}<a href="{{ ad.get_absolute_url }}">Reserve Now</a> ${{ ad.price|intcomma }}{% endif %}</td>
+								</tr>
+								{% empty %}
+								<tr>
+									<td><a href="#">Vance Refrigeration Service</a><br />Travis R. Honeywell</td>
+									<td>630&nbsp;708&nbsp;0312<br /><small>sortoflong@somelongdomain.com</small></td>
+									<td>Do you really want to hurt me? Do you really want to make me cry?</td>
+								</tr></a>
+								{% endfor %}
+								</tbody>
+								</table>
+								<table>
+								<tbody>
+									<tr>
+									{% for spread in publication.spread_set.all %}
+									<td>
+									{% thumbnail spread.design.preview "x160" as im %}<img src="{{ im.url }}" alt="{{ spread }}" />{% endthumbnail %}
+									Page{% if spread.recto %}s&nbsp;{{ spread.verso }}&mdash;{{ spread.recto }}{% else %}&nbsp; {{ spread.verso }}{% endif %}
+									</td>
+									{% if forloop.revcounter > 1 %}
+									{% cycle '' '' '</tr><tr>' %}
+									{% endif %}
+									{% endfor %}
+									</tr>
+								</tbody>
+								</table>
+							</div>
+						</div>
+						<br/><p class="clear"></p>
+					</div>
+					<p class="clear"></p>
+				</div>
+			{% endblock content %}

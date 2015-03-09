@@ -1,0 +1,7 @@
+{% load humanize %}
+{% for balloon in object_list|slice:":60" %}
+	{% if forloop.counter0 %}else {% endif %}if (mytimecounter == {{ forloop.counter0 }}) {
+		addInfo("{{ forloop.counter }}", '<h4 class="bubbleheader">{{ balloon.place }}</h4><div class="clear"></div></div>{% if balloon.place.current_population %}<p class="bubbleinfo"><span class="cloudlabel">Population:</span> {{ balloon.place.current_population|intcomma }}</p>{% endif %}{% if balloon.place.elevation %}<p class="bubbleinfo"><span class="cloudlabel">Elevation:</span> {{ balloon.place.elevation|intcomma }}</p>{% endif %}<p class="bubbleinfo"><span class="cloudlabel">New Link Added:</span> {% if balloon.was_added_today %}Today{% else %}{{ balloon.date_added|timesince }} ago{% endif %}</p><p class="bubblelink"><a href="/{{ balloon.place.slug }}/">Learn More</a></p>', {{ balloon.place.point.x }}, {{ balloon.place.point.y }});
+		mytimecounter{% if forloop.last %} = 0{% else %}++{% endif %};
+	}
+{% endfor %}

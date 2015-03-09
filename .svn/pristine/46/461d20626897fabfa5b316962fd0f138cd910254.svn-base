@@ -1,0 +1,34 @@
+{% load thumbnail %}
+					<div class="menu_segment">
+						<h4 class="open" id="menu_h4_page">Current Layout</h4>
+						<div id="menu_h4_page_div" class="gradientborder menu_h4_page open">
+							<ul>
+								<li>
+									{% if layout.cover %}
+										{% thumbnail publication.theme.coverdesign.annotated "x540" as im %}
+											<a onclick="$().jOverlay({url:'{{ im.url }}', imgLoading : '{{ STATIC_URL }}m/demo/ajax-loader.gif'});">
+										{% endthumbnail %}
+										{% thumbnail publication.theme.coverdesign.annotated "194" as im %}
+										<img src="{{ im.url }}" alt="" /></a>
+										{% endthumbnail %}
+									{% else %}
+										{% thumbnail layout.spread.design.annotated "x540" as im %}
+											<a onclick="$().jOverlay({url:'{{ im.url }}', imgLoading : '{{ STATIC_URL }}m/demo/ajax-loader.gif'});">
+										{% endthumbnail %}
+										{% thumbnail layout.spread.design.annotated "194" as im %}
+										<img src="{{ im.url }}" alt="" /></a>
+										{% endthumbnail %}
+									{% endif %}
+								</li>
+								<li><div id="progressbar1" class="progressbar" rel="{{ layout.progress_bar }}"></div></li>
+								{% for block in layout.block_set.all %}
+								<li>
+									<input type="checkbox" name="block{{ block.id }}" id="block{{ block.id }}" value="block{{ block.id }}" {% if block.filled %}checked {% endif %}disabled />
+									<label for="block{{ block.id }}">
+										<a href="{{ block.get_absolute_url }}">{{ block.template_block.sequence }} - {{ block }}</a>
+									</label>
+								</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>

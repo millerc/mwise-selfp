@@ -1,0 +1,12 @@
+									<li><a href="{% url selfpublish.views.sponsor_welcome publication.id %}">Welcome</a></li>
+									<li><a href="{% url selfpublish.views.sponsor_display publication.id %}">Premium Sponsorhips</a></li>
+									<li><a href="{% url selfpublish.views.sponsor_listings publication.id %}">Business Listings</a></li>
+									<li><a href="{% url selfpublish.views.sponsor_contact publication.id %}">Contact Us</a></li>
+									{% if request.user == publication.owner %}
+									<li><a href="{% url selfpublish.views.lead_list publication.id %}">Admin</a></li>
+									{% endif %}
+									{% if request.user.is_authenticated %}
+									<li><a href="{% url acct_logout %}">Logout</a></li>
+									{% else %}
+									<li><a href="{% url acct_login %}">Login</a></li>
+									{% endif %}

@@ -1,0 +1,186 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}{% load linebreaksli %}{% load humanize %}
+			{% block content %}
+				<div class="feature-full">
+					<div id="salesphase">
+						<h3><small><sup>SALES ENGINE</sup></small><br />
+						{{ publication }}</h3>
+							<div class="salesoptions">
+								<ul>
+									{% include "selfpublish/sales_navbar.html" %}
+								</ul>
+							</div>
+							<div id="advertiserlist">
+								<h2>{% if new_lead %}New{% else %}Edit{% endif %} Lead</h2>
+							</div>
+							<table border="0">
+								<tbody>
+									<tr>
+										<td colspan="2">
+											<div class="form">
+												<form method="post">
+													{% csrf_token %}
+													{{ form.as_p }}
+													<a href="{% url selfpublish.views.lead_list publication.id %}?{{ request.session.previous_get.urlencode }}"><button id="demo2" type="button" name="cancel" value="cancel" class="css3button">Cancel</button></a>
+													<button id="demo2" type="submit" name="save_continue" value="save_continue" class="css3button">Save and Continue Editing</button>
+													<button id="demo2" type="submit" name="save" value="save" class="css3button">Save</button>
+												</form>
+											</div>
+										</td>
+									{% if lead %}
+										<td colspan="1">
+											<table align="center">
+												<tr><th><small>Status:</small> {{ lead.status }}</th></tr>
+												<tr>
+													<td>
+														<form method="post">{% csrf_token %}
+														<p>
+															<a href="#">
+																<button type="submit" name="status" value="do-not-call" class="css3button">
+																	Do Not Call
+																</button>
+															</a>
+														</p>
+														<p>
+															<a href="#">
+																<button type="submit" name="status" value="pending" class="css3button">
+																	Pending
+																</button>
+															</a>
+														</p>
+														<p>
+															<a href="#">
+																<button type="submit" name="status" value="sold" class="css3button">
+																	Sold
+																</button>
+															</a>
+														</p>
+														<p>
+															<a href="#">
+																<button type="submit" name="status" value="declined" class="css3button">
+																	Declined
+																</button>
+															</a>
+														</p>
+														<p>
+															<a href="#">
+																<button type="submit" name="status" value="None" class="css3button">
+																	Clear Status
+																</button>
+															</a>
+														</p>
+														</form>
+													</td>
+												</tr>
+												<tr>
+													<th>Marketing</th>
+												</tr>
+												<tr>
+													<td>
+														<p>
+															<a href="{% url selfpublish.views.lead_invite_send publication.id lead.id %}">
+																<button id="demo2" type="button" name="invite" value="invite" class="css3button">
+																	Send Sponsor Site Invite
+																</button>
+															</a>
+														</p>
+													</td>
+												</tr>
+												{% if amount_due %}
+												<tr><th><small>Amount Due:</small> ${{ amount_due|intcomma }}</th></tr>
+												<tr>
+													<td>
+														<form method="post">{% csrf_token %}
+															<button id="demo2" type="submit" name="paypage" value="paypage" class="css3button">
+																Process Payment
+															</button>
+														</form>
+													</td>
+												</tr>
+												{% endif %}
+											</table>
+										</td>
+									</tr>
+									<tr><th>Premium Sponsorship</th><th><small>Page</small></th><th><small>Status</small></th></tr>
+									{% if display_ads %}
+									{% for ad in display_ads %}
+									<tr>
+										<td>
+											<small>ID: {{ ad.pk }}</small>&nbsp;
+											<a href="{{ ad.get_absolute_url }}">{{ ad }}</a>
+										</td>
+										<td>
+												{{ ad.adblock.layout.spread.verso }}{% if ad.adblock.layout.spread.recto %}&mdash;{{ ad.adblock.layout.spread.recto }}{% endif %}
+										</td>
+										<td>
+											{{ ad.paid|yesno:"Paid,Unpaid"}}
+											{% if not ad.paid %}
+												<form method="post">{% csrf_token %}
+													<button id="demo2" type="submit" name="cancel-reservation" value="{{ ad.id }}" class="css3button">
+														Cancel Reservation
+													</button>
+												</form>
+											{% endif %}
+										</td>
+									</tr>
+									{% endfor %}
+									{% endif %}
+									<tr>
+										<form method="post" target="_blank">
+											{% csrf_token %}
+											<td colspan="2">
+												<label for="id_adspace">New Premium Sponsorship:</label> {{ aform.adspace }}
+												&nbsp;
+												<label for="id_listing">Add Business Listing:</label> {{ aform.listing }}
+											</td>
+											<td>
+												<button id="demo2" type="submit" name="reserve-display" value="reserve-display" class="css3button">
+													Reserve
+												</button>
+											</td>
+										</form>
+									</tr>
+									<tr><th>Business Listings</th><th><small>Category</small></th><th><small>Status</small></th></tr>
+									{% for ad in line_ads %}
+									<tr>
+										<td>
+											<small>ID: {{ ad.pk }}</small>&nbsp;
+											<a href="{{ ad.get_absolute_url }}">{{ ad }}</a>
+										</td>
+										<td>
+											{{ ad.category }}
+										<td>
+											{{ ad.paid|yesno:"Paid,Unpaid"}}
+											{% if not ad.paid %}
+												<form method="post">{% csrf_token %}
+													<button id="demo2" type="submit" name="cancel-reservation" value="{{ ad.id }}" class="css3button">
+														Cancel Reservation
+													</button>
+												</form>
+											{% endif %}
+										</td>
+									</tr>
+									{% endfor %}
+									<tr>
+										<form method="post">
+											{% csrf_token %}
+											<td colspan="2">
+												Reserve a new business listing:
+											</td>
+											<td>
+												<button id="demo2" type="submit" name="reserve-listing" value="reserve-listing" class="css3button">
+													Reserve
+												</button>
+											</td>
+										</form>
+									</tr>
+									{% endif %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<br/><p class="clear"></p>
+				</div>
+				<p class="clear"></p>
+			</div>
+			{% endblock content %}

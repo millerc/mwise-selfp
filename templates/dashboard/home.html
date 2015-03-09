@@ -1,0 +1,78 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}
+			{% block content %}
+				<div class="myaccount-sub">
+					<h3>My Dashboard</h3>
+					<div class="queue_item">
+						<div class="queue_image">
+							<a href="#"><img src="{{ STATIC_URL }}m/box-art.gif" /></a>
+						</div>
+						<div class="queue_item_content">
+							<h3><a href="#">OTB Self-Publishing</a></h3>
+							<h4>Recent Publications</h4>
+							<ul>
+								{% for pub in publications|dictsortreversed:"updated"|slice:"3" %}
+								<li>
+									<a href="{{ pub.get_absolute_url }}">{{ pub.title }}</a> <small>updated {{ pub.updated|timesince }} ago</small>
+									<ul><li><a href="{% url selfpublish.views.lead_list pub.id %}">Sales Engine</a></li></ul>
+								</li>
+								{% empty %}
+								<li><big>Start a <a href="{% url selfpublish.views.home %}"> new publication</a></big></li>
+								{% endfor %}
+							</ul>
+							{% if publications %}<p><a href="#">View All Publications</a>&nbsp;|&nbsp;<a href="{% url selfpublish.views.theme_browse %}">New Publication</a></p>{% endif %}
+						</div>
+					</div>
+					<div class="queue_item">
+						<div class="queue_image">
+							<a href="#"><img src="{{ STATIC_URL }}m/box-art.gif" /></a>
+						</div>
+						<div class="queue_item_content">
+							<h3><a href="#">OTB Sponsorship</a></h3>
+							<h4>Recent Premium Sponsorships</h4>
+							<ul>
+								{% for ad in display_ads %}
+								<li><a href="{{ ad.get_absolute_url }}">{{ ad }}</a> <small>in {{ ad.publication }}</small></li>											{% empty %}
+								<li><big>No premium sponsorships available at this time</big></li>
+								{% endfor %}
+							</ul>
+							<h4>Recent Business Listings</h4>
+							<ul>
+								{% for ad in line_ads %}
+								<li><a href="{{ ad.get_absolute_url }}">{{ ad }}</a> <small>in {{ ad.publication }}</small></li>											{% empty %}
+								<li><big>No business listings available at this time</big></li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>
+				
+				<p class="clear"></p>
+				<div id="callout-sub">
+					<div class="callouts clickable">
+						<h2>Support Knowledgebase</h2>
+						<p>Here you can access our support knowledgebase, with detailed information on a variety of subjects.</p>
+						<p class="callout-link"><a href="#">Learn More</a></p>
+					</div>
+					<div class="callouts clickable">
+						<h2>Frequently Asked Questions</h2>
+						<p>Answers to some of the most common questions fielded by our support team, organized by subject.</p>
+						<p class="callout-link"><a href="#">Learn More</a></p>
+					</div>
+					<div class="callouts clickable">
+						<h2>Contact Support</h2>
+						<p>Need help? That's what we're here for. Contact us by email or phone.</p>
+						<p class="callout-link"><a href="#">Learn More</a></p>
+					</div>
+					<p class="clear"></p>
+				</div>
+			{% endblock content %}
+
+			{% block sidebar %}
+			<div id="sidebar">
+				<div id="browse-sub">
+				{% include "selfpublish/sidebar/account.html" %}
+				{% include "selfpublish/sidebar/resources.html" %}
+				</div>
+			</div>
+			{% endblock sidebar %}

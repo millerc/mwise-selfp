@@ -1,0 +1,58 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load ifsetting_tag %}
+{% load thumbnail %}
+
+{% block head_title %}{% trans "Marketwise : Welcome" %}{% endblock %}
+
+{% block body_class %}home{% endblock %}
+
+{% block body %}
+    
+	<div class="feature-sub"><!-- root element for scrollable -->
+		<!--<div class="featured-rotate">   
+	    <!== root element for the items -->
+		<div class="items"><img src="{{ STATIC_URL }}m/home.jpg" alt="Home Image" /></div>
+	</div>
+	<div class="carousel-sub"><!-- "previous page" action -->
+		<a class="clprev browse left"></a> <!-- root element for scrollable -->
+		<div class="scrollable-sub"><!-- root element for the items -->
+			<div class="items small">
+			    {% spaceless %}<div>
+			    {% for template in featured_templates %}
+			        {% thumbnail template.preview "109x141" as im %}
+                        <a href="{{ template.get_absolute_url }}"><img src="{{ im.url }}" style="margin:{{ im|margin:"109x141" }}" alt="{{ template }}" title="<h3>{{ template }}</h3>{{ template.description|linebreaksbr }}" /></a>
+                        {% empty %}
+                        <a href="{{ template.get_absolute_url }}"><small>Thumbnail Missing</small></a>
+                    {% endthumbnail %}
+			        {% if forloop.revcounter > 1 %}{% cycle '' '' '' '' '</div><div>' %}{% endif %}
+				{% endfor %}
+				</div>{% endspaceless %}
+			</div>
+		</div>
+		<!-- "next page" action -->
+		<a class="clnext browse right"></a> <!-- wrapper for navigator elements -->
+		<div class="navi"></div>
+	</div>
+	<p class="clear"></p>
+	<div id="callout-sub">
+		<div class="callouts clickable">
+			<h2>Member Marketwise</h2>
+			<p>Ten New MarketWise Promotional Toolbox design templates released http://cmln k.com/1t Ten New MarketWise Promotional Toolbox...</p>
+			<p class="callout-link"><a href="#">Earn More</a></p>
+		</div>
+		<div class="callouts clickable">
+			<h2>Out of the Box Publications</h2>
+			<p>Ten New MarketWise Promotional Toolbox design templates released http://cmln k.com/1t Ten New MarketWise Promotional Toolbox...</p>
+			<p class="callout-link"><a href="#">Earn More</a></p>
+		</div>
+		<div class="callouts clickable">
+			<h2>Browse the Templates</h2>
+			<p>Ten New MarketWise Promotional Toolbox design templates released http://cmln k.com/1t Ten New MarketWise Promotional...</p>
+			<p class="callout-link"><a href="#">Earn More</a></p>
+		</div>
+		<p class="clear"></p>
+	</div>
+    
+{% endblock %}

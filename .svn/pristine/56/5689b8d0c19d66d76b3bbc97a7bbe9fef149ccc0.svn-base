@@ -1,0 +1,74 @@
+{% extends "selfpublish/base.html" %}
+{% load humanize %}
+			{% block content %}
+				<div class="feature-sub">
+					<div class="product-preview">
+						<table class="booksizes" border="1" bordercolor="#ffffff" width="650" cellpadding="1" cellspacing="1">
+							<tr>
+								<td class="title">Book Sizes</td>
+								{% for pagecount in pagecounts %}
+								<td class="topcells"><strong>{{ pagecount }}</strong> <small>pages</small></td>
+								{% endfor %}
+							</tr>
+							<tr>
+								<td class="heading">Number of Articles</td>
+								{% for pagecount in pagecounts %}
+								<td class="cells">{{ pagecount.minimum_articles }}&ndash;{{ pagecount.maximum_articles }}</td>
+								{% endfor %}
+							</tr>
+							<tr>
+								<td class="heading">Number of Ads</td>
+								{% for pagecount in pagecounts %}
+								<td class="cells">{{ pagecount.advertisements }} Ads</td>
+								{% endfor %}
+							</tr>
+							<tr>
+							<td class="heading">Business Listings</td>
+								{% for pagecount in pagecounts %}
+								<td class="cells">{{ pagecount.listings }}</td>
+								{% endfor %}
+							</tr>
+							<tr>
+								<td class="heading">Revenue</td>
+								{% for pagecount in pagecounts %}
+								<td class="cells">${{ pagecount.revenue|intcomma }}</td>
+								{% endfor %}
+							</tr>
+							<tr>
+								<td class="heading">Recommended<br/>Chamber size</td>
+								{% for pagecount in pagecounts %}
+								<td class="cells">{{ pagecount.minimum_membership }}&ndash;{{ pagecount.maximum_membership }}</td>
+								{% endfor %}
+							</tr>
+							<tr>
+								<td></td>
+								{% for pagecount in pagecounts %}
+								<td class="selectbtn">
+									<form action="../select/" method="post">
+										{% csrf_token %}
+										<input type="hidden" name="bycompare" value="yes" />
+										<input type="hidden" name="membership" value="{{ pagecount.id }}" />
+										<button type="submit" name="select" value="select" class="css3button" style="margin-bottom:6px;">Select</button>
+									</form>
+									</td>
+								{% endfor %}
+							</tr>
+							<tr>
+								<td></td>
+								<td class="closing"></td>
+								<td class="closing"></td>
+								<td class="closing"></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<p class="clear"></p>
+			{% endblock content %}
+			{% block sidebar %}
+			<div id="sidebar">
+				<div id="browse-sub">
+				{% include "selfpublish/sidebar/account.html" %}
+				{% include "selfpublish/sidebar/resources.html" %}
+				</div>
+			</div>
+			{% endblock sidebar %}

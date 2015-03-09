@@ -1,0 +1,41 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load ifsetting_tag %}
+{% load thumbnail %}
+
+{% block head_title %}{{ template }}{% endblock %}
+
+{% block extra_head_base %}
+    {% block extra_head %}
+    {% endblock %}
+{% endblock %}
+
+
+{% block body %}
+    <div class="feature-sub">
+        <div class="content flyer" style="display: block; ">
+            <div class="product-preview">{% thumbnail customization.template.preview "381" as im %}<img src="{{ im.url }}" alt="{{ template }}" />{% endthumbnail %}</div>
+            <div class="product-desc">
+                <ul>
+                    <li class="title">Status: {{ customization.status }}</li>
+                    <li class="desc">Updated: {{ customization.updated }}</li>
+                </ul>
+                    {% for block in customization.block_set.all %}
+                    <ul>
+                        <li class="title">{{ block.template_block.sequence }}. {{ block.template_block.label }}</li>
+                        <li class="desc">{{ block.charblock.content }}{{ block.textblock.content|linebreaksbr }}{% if block.imageblock %}{% thumbnail block.imageblock.content "109" as im %}<img src="{{ im.url }}" alt="{{ block }}" />{% endthumbnail %}{% endif %}</li>
+                    </ul>
+                    {% endfor %}
+                <a href="#" rel="#options" class="overlaylink block"><img src="{{ STATIC_URL }}/404" alt="Do Something" /></a>
+                <a href="#" class="block"><img src="{{ STATIC_URL }}/404" alt="Do Something Else" /></a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_body_base %}
+    {% block extra_body %}
+    {% endblock %}
+{% endblock %}

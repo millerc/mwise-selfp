@@ -1,0 +1,196 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}{% load linebreaksli %}{% load humanize %}
+			{% block content %}
+				<div class="feature-full">
+					<div id="salesphase">
+						<h3><small><sup>SALES ENGINE</sup></small><br />
+						{{ publication }}</h3>
+							<div class="salesoptions">
+								<ul>
+									{% include "selfpublish/sales_navbar.html" %}
+								</ul>
+							</div>
+							<table border="0">
+								<tbody>
+								<!-- Results table headers -->
+								<tr>
+									 <th colspan="3">Sales</th>
+								</tr>
+								<tr>
+									<td colspan="3">
+										<table border="0" align="center">
+											<tbody>
+												<tr>
+													<th>Total Sales</th>
+													<th>Sales Goal</th>
+													<th>Percent to Goal</th>
+												</tr>
+												<tr>
+													<td>
+														${{ publication.sales_paid|intcomma }}
+														<div id="progressbar1" class="progressbar" rel="{% widthratio publication.sales_paid publication.page_count.revenue 100%}"></div>
+													</td>
+													<td>${{ publication.page_count.revenue|intcomma }}</td>
+													<td>{% widthratio publication.sales_paid publication.page_count.revenue 100%}%</td>
+												</tr>
+												<tr>
+													<td>
+														${{ publication.sales_reserved|intcomma }}
+														<div id="progressbar1" class="progressbar" rel="{% widthratio publication.sales_reserved publication.page_count.revenue 100%}"></div>
+													</td>
+													<td>${{ publication.page_count.revenue|intcomma }}</td>
+													<td>{% widthratio publication.sales_reserved publication.page_count.revenue 100 %}%</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									 <th colspan="3">Leads <a href="{% url selfpublish.views.lead_list publication.id %}"><small>Show All</small></a></th>
+								</tr>
+								<tr>
+									<td>
+										<table border="0">
+										<tr>
+											<th>Pending 
+												{% if leads.pending %}
+												<a href="{% url selfpublish.views.lead_list publication.id %}?status={{ status.pending.id }}">
+													<small>({{ leads.pending.count }})</small>
+												</a>
+												{% endif %}
+											</th>
+										</tr>
+										{% if leads.pending %}
+										{% for lead in leads.pending|slice:":5" %}<tr><td><a href="{{ lead.get_absolute_url }}">{{ lead }}</a></td></tr>{% endfor %}
+										<tr><td>
+											<a href="{% url selfpublish.views.lead_list publication.id %}?status={{ status.pending.id }}">
+												<em>Show All ({{ leads.pending.count }})</em>
+											</a>
+										</td></tr>
+										{% else %}
+										<tr><td><em>No Pending Leads</em></td></tr>
+										{% endif %}
+										</table>
+									</td>
+									<td>
+										<table border="0">
+										<tr>
+											<th>Sold 
+												{% if leads.sold %}
+												<a href="{% url selfpublish.views.lead_list publication.id %}?status={{ status.sold.id }}">
+													<small>({{ leads.sold.count }})</small>
+												</a>
+												{% endif %}
+											</th>
+										</tr>
+										{% if leads.sold %}
+										{% for lead in leads.sold|slice:":5" %}<tr><td><a href="{{ lead.get_absolute_url }}">{{ lead }}</a></td></tr>{% endfor %}
+										<tr><td>
+											<a href="{% url selfpublish.views.lead_list publication.id %}?status={{ status.sold.id }}">
+												<em>Show All ({{ leads.sold.count }})</em>
+											</a>
+										</td></tr>
+										{% else %}
+										<tr><td><em>No Sold Leads</em></td></tr>
+										{% endif %}
+										</table>
+									</td>
+									<td>
+										<table border="0">
+										<tr>
+											<th>Declined 
+												{% if leads.declined %}
+												<a href="{% url selfpublish.views.lead_list publication.id %}?status={{ status.declined.id }}">
+													<small>({{ leads.declined.count }})</small>
+												</a>
+												{% endif %}
+											</th>
+										</tr>
+										{% if leads.declined %}
+										{% for lead in leads.declined|slice:":5" %}<tr><td><a href="{{ lead.get_absolute_url }}">{{ lead }}</a></td></tr>{% endfor %}
+										<tr><td>
+											<a href="{% url selfpublish.views.lead_list publication.id %}?status={{ status.declined.id }}">
+												<em>Show All ({{ leads.declined.count }})</em>
+											</a>
+										</td></tr>
+										{% else %}
+										<tr><td><em>No Declined Leads</em></td></tr>
+										{% endif %}
+										</table>
+									</td>
+								</tr>
+									 <th colspan="3">Premiums</th>
+								</tr>
+								<tr>
+									<td colspan="3">
+										<table border="0" align="center">
+											<tbody>
+												<tr>
+													<th>Position</th>
+													<th>Price</th>
+													<th>Status</th>
+												</tr>
+												{% for a in adblocks %}
+												<tr>
+													<td>{{ a }}</td>
+													<td>${{ a.price|intcomma }}</td>
+													{% if a.display_ad %}
+													<td>Reserved: 
+														<a href="{{ a.display_ad.get_absolute_url }}">
+															{{ a.display_ad.lead }}</a> 
+														<small>{{ a.display_ad.paid|yesno:"(Paid)," }}</small>
+													</td>
+													{% else %}
+													<td>Available</td>
+													{% endif %}
+												</tr>
+												{% endfor %}
+											</tbody>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									 <th colspan="3">Listings</th>
+								</tr>
+								<tr>
+									<td colspan="3">
+										<table border="0" align="center">
+											<tbody>
+												<tr>
+													<th>Reserved</th>
+													<th>Available</th>
+													<th>Capacity</th>
+												</tr>
+												<tr>
+													<td>{{ lineads.count }} <div id="progressbar1" class="progressbar" rel="{% widthratio lineads.count publication.page_count.listings 100%}"></div></td>
+													<td>{{ publication.page_count.listings }}</td>
+													<td>{% widthratio lineads.count publication.page_count.listings 100%}%</td>
+												</tr>
+												<tr>
+													<th colspan="2">Sponsor</th>
+													<th>Status</th>
+												</tr>
+												{% for l in lineads %}
+												<tr>
+													<td colspan="2"><a href="{{ l.get_absolute_url }}">{{ l.lead }}</a></td>
+													<td>{% if l.approved %}Approved{% else %}{% if l.setup_done %}In Progress{% else %}New{% endif %}{% endif %}{% if l.paid %}, Paid{% endif %}</td>
+												</tr>
+												{% empty %}
+												<tr>
+													<td colspan="3"><em>No Listings</em></td>
+												</tr>
+												{% endfor %}
+											</tbody>
+										</table>
+									</td>
+								</tr>
+								<tr>
+								 </tbody>
+							</table>
+						</div>
+					</div>
+					<br/><p class="clear"></p>
+				</div>
+				<p class="clear"></p>
+			</div>
+			{% endblock content %}

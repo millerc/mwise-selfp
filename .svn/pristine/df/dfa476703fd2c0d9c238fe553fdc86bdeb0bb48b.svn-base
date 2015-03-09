@@ -1,0 +1,18 @@
+					<div class="menu_segment">
+						<h4 class="open" id="menu_h4_production">Layout Checklist</h4>
+						<div id="menu_h4_production_div" class="gradientborder menu_h4_production open">
+							<ul>
+								<li><div id="progressbar1" class="progressbar" rel="{{ publication.progress_bar }}"></div></li>
+								<li>
+									<input type="checkbox" name="cover{{ publication.cover.id }}" id="cover{{ publication.cover.id }}" value="cover{{ publication.cover.id }}" disabled {% if publication.cover.blocks_filled_percent == 100 %}checked {% endif %} />
+									<label for="cover{{ publication.cover.id }}"><a href="{{ publication.cover.get_absolute_url }}">Front Cover</a></label>
+								</li>
+								{% for spread in publication.spread_set.all %}
+								<li>
+									<input type="checkbox" name="spread{{ spread.id }}" id="spread{{ spread.id }}" value="{{ spread.id }}" disabled {% if spread.progress_bar == 100 %}checked {% endif %}/>
+									<label for="{{ spread.id }}"><a href="{{ spread.get_absolute_url }}">Pages {{ spread.verso }}&ndash;{{ spread.recto }}</a></label>
+								</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>

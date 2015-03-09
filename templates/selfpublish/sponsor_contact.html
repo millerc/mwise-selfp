@@ -1,0 +1,33 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}{% load linebreaksli %}{% load humanize %}
+			{% block content %}
+				<div class="feature-full">
+					<div id="salesphase">
+						<h3><small><sup>SPONSORSHIP ENGINE</sup></small><br />
+						{{ publication }}</h3>
+							<div class="salesoptions">
+								<ul>
+									{% include "selfpublish/sponsor_navbar.html" %}
+								</ul>
+							</div>
+							<div id="advertiserlist"><h2>Contact Us</h2></div>
+								<table border="0">
+								<tbody>
+								<tr>
+									<td>
+									<div class="form"><form method="post">
+										{% csrf_token %}
+										{{ form.as_p }}
+										<button id="demo2" type="submit" name="save" value="save" class="css3button">Send</button>
+										<a href="../"><button id="demo2" type="submit" name="cancel" value="cancel" class="css3button">Cancel</button></a>
+									</form></div></td>
+								</tr>
+								</tbody>
+								</table>
+							</div>
+						</div>
+						<br/><p class="clear"></p>
+					</div>
+					<p class="clear"></p>
+				</div>
+			{% endblock content %}

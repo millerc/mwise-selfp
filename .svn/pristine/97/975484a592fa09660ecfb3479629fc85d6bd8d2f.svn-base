@@ -1,0 +1,44 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}
+			{% block content %}
+				<div class="myaccount-sub">
+					<h3>{{ layout }}</h3>
+					<center>
+					{% if layout.cover %}
+						{% thumbnail publication.theme.coverdesign.annotated "x450" as im %}
+						<img src="{{ im.url }}" style="margin-top:10px;" alt="" />
+						{% endthumbnail %}
+					{% else %}
+						{% thumbnail layout.spread.design.annotated "x450" as im %}
+						<img src="{{ im.url }}" style="margin-top:10px;" alt="" />
+						{% endthumbnail %}
+					{% endif %}
+					</center>
+								
+					<div class="center-button">
+						<a href="{{ publication.get_absolute_url }}">
+							<img src="{{ STATIC_URL }}m/back_to_dash_btn.png" alt="Back to Dashboard" border="0">
+						</a>
+						<a href="change-layout/">
+							<img src="{{ STATIC_URL }}m/change_layout_btn.png" alt="Change Layout" border="0">
+						</a>
+					</div><div class="form"><form enctype="multipart/form-data" method="post" action="./">{% csrf_token %}
+					{% for item in block_list %}
+					    <strong>{{ item.block }}</strong>
+					    {{ item.form }}<br />
+					    <input type="submit" /><br />
+					{% endfor %}</form></div>
+					</div>
+				<p class="clear"></p>
+			{% endblock content %}
+
+			{% block sidebar %}
+			<div id="sidebar">
+				<div id="browse-sub">
+				{% include "selfpublish/sidebar/account.html" %}
+				{% include "selfpublish/sidebar/layouts.html" %}
+				{% include "selfpublish/sidebar/current_layout.html" %}
+				{% include "selfpublish/sidebar/resources.html" %}
+				</div>
+			</div>
+			{% endblock sidebar %}

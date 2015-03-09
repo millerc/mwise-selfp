@@ -1,0 +1,33 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load ifsetting_tag %}
+{% load thumbnail %}
+
+{% block head_title %}{{ template }}{% endblock %}
+
+{% block extra_head_base %}
+    {% block extra_head %}
+    {% endblock %}
+{% endblock %}
+
+
+{% block body %}
+    <div class="feature-customize">
+        <div class="content flyer" style="display: block; ">
+            <div class="product-preview">{% thumbnail template.annotated_preview "381" as im %}<img src="{{ im.url }}" alt="{{ template }}" />{% endthumbnail %}</div>
+            <div class="customize-desc">
+                <p>Note the <img src="{{ STATIC_URL }}m/12345.jpg" align="top" alt="12345" /> symbols on the preview image. These are areas that can be customized in this design are the numbers that correspond to the numbered customization fields in the form below. You only to fill out the customization fields that have a corresponding number symbol on the preview images.</p>
+                <form {% if form.is_multipart %}enctype="multipart/form-data"{% endif %} method="post" action="">{% csrf_token %}<div class="form>"
+                {{ form.as_p }}
+                <input type="image" class="form-button" src="{{ STATIC_URL }}m/custom_submit.jpg" alt="Submit Form" />
+                </div></form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_body_base %}
+    {% block extra_body %}
+    {% endblock %}
+{% endblock %}

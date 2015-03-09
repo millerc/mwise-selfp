@@ -1,0 +1,9 @@
+<p>Dear {{ lead.contact_name }},</p>
+
+<p>The <strong>{{ lead.publication }}</strong> soon will be published. This would be a great opportunity to create exposure for {{ lead.organization }}. There are sponsorship opportunities ranging from business listings to full-color, full-page advertisements.</p>
+
+<p>Please <a href="https://{{ current_site.domain }}{% url selfpublish.views.lead_invite_accept lead.invitation_code %}">visit our site</a> for additional information and to reserve your space today.</p> 
+
+<p><a href="https://{{ current_site.domain }}{% url selfpublish.views.lead_invite_accept lead.invitation_code %}">https://{{ current_site.domain }}{% url selfpublish.views.lead_invite_accept lead.invitation_code %}</a></p>
+
+<p>Thanks.</p>

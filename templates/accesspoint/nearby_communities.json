@@ -1,0 +1,11 @@
+{% autoescape off %}{% templatetag openbrace %}
+    "places": [
+        {% for place in places %}{% templatetag openbrace %}
+            "name": "{{ place.name }}",
+            "distance": {% if place.distance.mi < 0.1 %}"{{ place.distance.ft|floatformat:"0" }} ft"{% else %}"{{ place.distance.mi|floatformat:"2" }} mi"{% endif %}
+        {% templatetag closebrace %}{% if forloop.last %}{% else %},
+        {% endif %}{% endfor %}
+    ]
+{% templatetag closebrace %}{% endautoescape %}
+
+

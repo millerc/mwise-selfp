@@ -1,0 +1,21 @@
+{% extends "selfpublish/base.html" %}
+			{% block content %}
+				<div class="myaccount-sub">
+					<h3>New publication setup</h3>
+					<p>Thank you for your recent Out of the Box publication purchase. To complete your transaction and start building your publication, please enter the key provided to you at checkout and give your new publication a name.</p>
+					<form class="form" method="POST" action="">{% csrf_token %}
+						{{ form.as_p }}
+						<button type="submit" name="" value="" class="css3button" style="margin-top:6px;">Enter</button>
+					</form>
+				</div>
+				<p class="clear"></p>
+				<p class="clear"></p>
+			{% endblock content %}
+			{% block sidebar %}
+			<div id="sidebar">
+				<div id="browse-sub">
+				{% include "selfpublish/sidebar/account.html" %}
+				{% include "selfpublish/sidebar/resources.html" %}
+				</div>
+			</div>
+			{% endblock sidebar %}

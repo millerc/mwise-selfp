@@ -1,0 +1,103 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}
+			{% block content %}
+				<div class="myaccount-sub">
+					<h3 style="margin-top:6px;margin-left:6px">{{ layout }}</h3>
+					<center>
+					{% if layout.cover %}
+						{% thumbnail publication.theme.coverdesign.annotated "x450" as im %}
+						<img src="{{ im.url }}" style="margin-top:10px;" alt="" />
+						{% endthumbnail %}
+					{% else %}
+						{% thumbnail layout.spread.design.annotated "x450" as im %}
+						<img src="{{ im.url }}" style="margin-top:10px;" alt="" />
+						{% endthumbnail %}
+					{% endif %}
+					</center>
+								
+					<div class="center-button">
+						<a href="{{ layout.get_absolute_url }}"><button type="button" name="" value="" class="css3button">Return to Layout</button></a>
+					</div>
+					
+					<div id="block{{ block.template_block.sequence }}" class="queue_item">
+						<div class="queue_image">
+							<img src="{{ STATIC_URL }}m/{{ b.template_block.sequence }}_otb.png" />
+						</div>
+						<div class="queue_item_content">
+							<h3>{{ b }}</h3>
+							{% if b.charblock %}
+								<form id="blockform" method="post" action="">
+									{% csrf_token %}{{ f.as_p }}
+								<button type="submit" name="submit" value="submit" class="css3button">Save</button>
+								</form>
+							{% endif %}
+
+							{% if b.fileblock %}
+								{% if b.filled %}
+									<form id="blockform" method="post" action="">{% csrf_token %}
+									<ul>
+										<li>{{ b.fileblock.file.filename }}</li>
+										<li><span><img src="{{ STATIC_URL }}m/document.png" /></span></li>
+										<li>{{ f.byline.label_tag }} {{ f.byline }}</li>
+										<li><button type="submit" name="submit" value="save" class="css3button">Save</button></li>
+									</ul>
+									</form>
+								{% endif %}	
+								<br /><br /><br />
+								<h3>Replace File</h3>
+								<form id="blockform" enctype="multipart/form-data" method="post" action="">{% csrf_token %}
+									<ul>
+										<li>File Specifications:<span><img src="{{ STATIC_URL }}m/info_disc.png"></span></li>
+										<li>{{ b.fileblock.template_file_block.target_word_count }} Words</li>
+										<li>.doc, .docx, .odt, .txt, .rtf, or .pdf</li>
+										{{ f.as_ul }}
+										<li><button type="submit" name="submit" value="replace" class="css3button">Replace</button></li>
+									</ul>
+								</form>
+							{% endif %}
+							
+							{% if b.imageblock %}
+								{% if b.filled %}
+									<form id="blockform" method="post" action="">{% csrf_token %}
+									<ul>
+										<li>{{ b.imageblock.image.filename }}</li>
+										<li>
+											{% thumbnail b.imageblock.image.content "x540" as im %}
+											<a onclick="$().jOverlay({url:'{{ im.url }}', imgLoading : '{{ STATIC_URL }}m/demo/ajax-loader.gif'});">
+											{% endthumbnail %}
+											<span>{% thumbnail b.imageblock.image.content "64x64" crop="center" as im %}<img src="{{ im.url }}" />{% endthumbnail %}</span></a>
+											<ul><li>{{ f.credit.label_tag }} {{ f.credit }}</li>
+											<li>{{ f.caption.label_tag }} {{ f.caption }}</li></ul>
+										</li>
+										<li><button type="submit" name="submit" value="submit" class="css3button">Save</button></li>
+									</ul>
+									</form>
+								{% endif %}
+								<br /><br /><br />
+								<h3>Replace Image</h3>
+								<form id="blockform" enctype="multipart/form-data" method="post" action="">{% csrf_token %}
+									<ul>								
+										<li>Image Specifications:<span><img src="{{ STATIC_URL }}m/info_disc.png"></span></li>
+										<li>{{ b.imageblock.template_image_block.target_width }} x {{ b.imageblock.template_image_block.target_width }} pixels</li>
+										<li>.jpg, .tif, or .png</li>
+										{{ f.as_ul }}
+										<li><button type="submit" name="submit" value="upload" class="css3button">Upload</button>&nbsp;<a href="select/"><button type="submit" name="submit" value="replace" class="css3button">Choose from Library</button></a></li>
+									</ul>
+								</form>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+				<p class="clear"></p>
+			{% endblock content %}
+
+			{% block sidebar %}
+			<div id="sidebar">
+				<div id="browse-sub">
+				{% include "selfpublish/sidebar/account.html" %}
+				{% include "selfpublish/sidebar/layouts.html" %}
+				{% include "selfpublish/sidebar/current_layout.html" %}
+				{% include "selfpublish/sidebar/resources.html" %}
+				</div>
+			</div>
+			{% endblock sidebar %}

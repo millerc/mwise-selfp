@@ -1,0 +1,85 @@
+{% load humanize %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>CommunityLink // Find a Community{% if query %} Results{% endif %}</title>
+    <link href="/static/css/internal.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("a[rel]").overlay({
+				mask: {
+				color: '#000',
+				loadSpeed: 800,
+				opacity: 0.7
+				},
+				closeOnClick: false
+			});
+		});
+	</script>
+</head>
+<body>
+<div id="wrapperBg">
+	<div id="wrapper">
+		<div id="header">
+            <a href="/" id="logo"></a>
+			<a href="http://www.youtube.com/communitylink" id="youtube" class="sociallink"></a>
+			<a href="http://www.linkedin.com/companies/communitylink" id="linkedin" class="sociallink"></a>
+			<a href="http://twitter.com/communitylink" id="twitter" class="sociallink"></a>
+			<a href="http://www.facebook.com/pages/CommunityLink/115032009134" id="facebook" class="sociallink"></a>
+			<a href="feed://twitter.com/statuses/user_timeline/17877697.rss" id="rss" class="sociallink"></a>
+			<a href="/chamber-services/contact.php" id="contactus"></a>
+			<a href="/zone" id="clientzone"></a>
+        </div>
+			<div id="contentArea">
+				<div id="purpleArea">
+					<div id="leftCol"><h1>suggest a link</h1><div class="content"><span class="openingSentence">Are we missing something great?</span> We welcome your suggestions! Search for a community below and follow the link to our suggestion form.</div></div>
+				</div>
+				<div id="content">
+  <form action="." method="GET">
+    <p><label class="title" for="st">State <span class="smallhelp">(optional)</span></label>
+    <select name="st">
+      <option value=""></option>
+      {% for state in state_list %}
+      <option value="{{ state.stusps }}" {% if stusps == state.stusps %}selected="selected"{% endif %}>{{ state.name }}</option>
+      {% endfor %}
+    </select></p>
+    <p><label class="title" for="q">Community <span class="smallhelp"></span> </label>
+    <input class="box" type="text" name="q" value="{{ query|escape }}">
+    <input class="search" type="submit" value="Search"></p>
+  </form>
+  {% if errors %}
+    <ul>
+      {% for error in errors %}
+      <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+  {% if query %}
+    <h2>{{ results.count|intcomma }} result{{ results|pluralize }} for "{{ query|escape }}":</h2>
+
+    {% if results %}
+      <ul>
+      {% for place in results %}
+        <li><a href="/{{ place.slug }}/#suggest-link">{{ place|escape }}</a></li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <p>No communities found. Try reducing the number of search terms and do not include the state name or abbreviation.</p>
+      <p>Still can't find your community? <a href="mailto:cloud@communitylink.com">Email us</a> and we'll see what we can do.</p>
+    {% endif %}
+  {% endif %}
+  {% endif %}
+</div>
+<div id="footerBar"></div>
+				<div id="footerContent">Craig Williams Creative, Inc. &copy; 2010 | <a href="../chamber-services/privacy_policy.php">Privacy policy</a> 4742 Holts Prairie Rd Pinckneyville, Illinois 62274 - 1-800-455-5600 or 1-618-357-8653</div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-4459302-1");
+pageTracker._trackPageview();
+} catch(err) {}</script></body>
+</html>

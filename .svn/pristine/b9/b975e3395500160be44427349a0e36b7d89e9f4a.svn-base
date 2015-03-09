@@ -1,0 +1,52 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}{% load linebreaksli %}
+			{% block content %}
+				<div class="feature-full">
+					<div id="salesphase">
+						<h3><small><sup>SALES ENGINE</sup></small><br />
+						{{ publication }}</h3>
+							<div class="salesoptions">
+								<ul>
+									{% include "selfpublish/sales_navbar.html" %}
+								</ul>
+							</div>
+							<div id="advertiserlist">
+								<h2>Leads {% if foo %}(?){% endif %}</h2>
+								<p>
+									<form method="get">
+										{{ form }}
+										<button id="demo2" type="submit" class="css3button">Find</button>
+									</form>
+									{% include "selfpublish/_top_pager.html" %}
+								</p>
+							</div>
+								<table border="0">
+								<tbody>
+								<!-- Results table headers -->
+								<tr>
+									<th>Company/Person</th>
+									<th>Phone/Email</th>
+									<th>Status/Note</th>
+								<tr>
+								{% for lead in leads %}
+								<tr>
+									<td><a href="{{ lead.get_absolute_url }}">{{ lead.organization }}</a><br />{{ lead.contact_name }}</td>
+									<td>{{ lead.phone }}<br />{{ lead.email }}</td>
+									<td>{{ lead.status }}<br />{{ lead.note }}</td>
+								</tr>
+								{% empty %}
+								<tr>
+									<td colspan="3">No leads yet. <a href="{% url selfpublish.views.lead_add publication.id %}">Add New Contact</a> or <a href="{% url selfpublish.views.lead_import publication.id %}">Import List</a></li>
+</td>
+								</tr></a>
+								{% endfor %}
+								</tbody>
+								</table>
+								{% include "selfpublish/_bottom_pager.html" %}								
+							</div>
+						</div>
+						<br/><p class="clear"></p>
+					</div>
+					<p class="clear"></p>
+				</div>
+			{% endblock content %}

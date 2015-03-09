@@ -1,0 +1,57 @@
+{% extends "selfpublish/base.html" %}
+{% load humanize %}{% load thumbnail %}{% load linebreaksli %}
+			{% block content %}
+				<div class="myaccount-sub">
+					<div class="queue_item">
+						<div class="queue_image">
+							{% thumbnail current_design.preview "175x120" as im %}
+							<img src="{{ im.url }}" />
+							{% endthumbnail %}
+						</div>
+						<div class="queue_item_content">
+							<h3>Current Layout: {{ current_layout }}</h3>
+						</div>
+					</div>
+					{% for design in available_designs %}
+					<div class="queue_item">
+						<div class="queue_image">
+							{% thumbnail design.annotated "x540" as im %}
+								<a onclick="$().jOverlay({url:'{{ im.url }}', imgLoading : '{{ STATIC_URL }}m/demo/ajax-loader.gif'});">
+							{% endthumbnail %}
+							{% thumbnail design.preview "175x120" as im %}
+							<img src="{{ im.url }}" />
+							{% endthumbnail %}</a>
+						</div>
+						<div class="queue_item_content">
+							<h3>Available option: {% if design.coverdesign %}{{ design.coverdesign.theme }}{% else %}{{ design.template }}{% endif %}</h3>
+							<ul>
+								<li>Layout Contents:<span><img src="{{ STATIC_URL }}m/info_disc.png"></span></li>
+								{{ design.template.blocks_text|linebreaksli }}
+								<li>&nbsp;</li>
+								<li>
+									<div class="form">
+										<form action="" method="post">
+											{% csrf_token %}
+											<input type="hidden" name="new_design" value="{{ design.pk }}" />
+											<button type="submit" name="submit" value="submit" class="css3button">Select Layout</button>
+										</form>
+									</div>
+									<div class="clear"></div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+				<p class="clear"></p>
+				<p class="clear"></p>
+			{% endblock content %}
+			{% block sidebar %}
+			<div id="sidebar">
+				<div id="browse-sub">
+				{% include "selfpublish/sidebar/account.html" %}
+				{% include "selfpublish/sidebar/layouts.html" %}
+				{% include "selfpublish/sidebar/resources.html" %}
+				</div>
+			</div>
+			{% endblock sidebar %}

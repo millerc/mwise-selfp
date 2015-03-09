@@ -1,0 +1,95 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load ifsetting_tag %}
+{% load thumbnail %}
+
+{% block head_title %}{{ template }}{% endblock %}
+
+{% block extra_head_base %}
+    {% block extra_head %}
+    {% endblock %}
+{% endblock %}
+
+
+{% block body %}
+    <div class="feature-sub">
+        <div class="content flyer" style="display: block; ">
+            <div class="product-preview">{% thumbnail template.preview "431" as im %}<img src="{{ im.url }}" alt="{{ template }}" />{% endthumbnail %}</div>
+            <div class="product-desc">
+                <ul>
+                    <li class="title">{{ template.name }}</li>
+                    <li class="desc">{{ template.description|linebreaksbr }}</li>
+                </ul>
+                <a href="#" rel="#options" class="overlaylink block"><img src="{{ STATIC_URL }}m/view_custom_options.jpg" alt="View Customization Options" /></a>
+                <a href="customize" class="block"><img src="{{ STATIC_URL }}m/request_customization.jpg" alt="Request Customization" /></a>
+            </div>
+        </div>
+    </div>
+    {% if template.related_templates.all %}
+    <div class="carousel-sub"><!-- "previous page" action -->
+        <p style="margin:10px;"><big>Related Templates</big></p>
+		<a class="clprev browse left"></a> <!-- root element for scrollable -->
+		<div class="scrollable-sub"><!-- root element for the items -->
+			<div class="items small">
+			    {% spaceless %}<div>
+			    {% for template in template.related_templates.all %}
+			        {% thumbnail template.preview "109x141" as im %}
+                        <a href="{{ template.get_absolute_url }}"><img src="{{ im.url }}" style="margin:{{ im|margin:"109x141" }}" alt="{{ template }}" title="<h3>{{ template }}</h3>{{ template.description|linebreaksbr }}" /></a>
+                        {% empty %}
+                        <a href="{{ template.get_absolute_url }}"><small>Thumbnail Missing</small></a>
+                    {% endthumbnail %}
+			        {% if forloop.revcounter > 1 %}{% cycle '' '' '' '' '</div><div>' %}{% endif %}
+				{% endfor %}
+				</div>{% endspaceless %}
+			</div>
+		</div>
+		<!-- "next page" action -->
+		<a class="clnext browse right"></a> <!-- wrapper for navigator elements -->
+		<div class="navi"></div>
+	</div>
+	{% endif %}
+    {% if template.suggested_templates.all %}
+    <div class="carousel-sub"><!-- "previous page" action -->
+        <p style="margin:10px;"><big>Other Templates You May Like</big></p>
+		<a class="clprev browse left"></a> <!-- root element for scrollable -->
+		<div class="scrollable-sub"><!-- root element for the items -->
+			<div class="items small">
+			    {% spaceless %}<div>
+			    {% for template in template.suggested_templates.all %}
+			        {% thumbnail template.preview "109x141" as im %}
+                        <a href="{{ template.get_absolute_url }}"><img src="{{ im.url }}" style="margin:{{ im|margin:"109x141" }}" alt="{{ template }}" title="<h3>{{ template }}</h3>{{ template.description|linebreaksbr }}" /></a>
+                        {% empty %}
+                        <a href="{{ template.get_absolute_url }}"><small>Thumbnail Missing</small></a>
+                    {% endthumbnail %}
+			        {% if forloop.revcounter > 1 %}{% cycle '' '' '' '' '</div><div>' %}{% endif %}
+				{% endfor %}
+				</div>{% endspaceless %}
+			</div>
+		</div>
+		<!-- "next page" action -->
+		<a class="clnext browse right"></a> <!-- wrapper for navigator elements -->
+		<div class="navi"></div>
+	</div>
+	{% endif %}
+
+{% endblock %}
+
+{% block extra_body_base %}
+    {% block extra_body %}
+	<div id="options" class="overlay">
+        <div class="product-preview">
+            <h2>Preview</h2>
+            {% thumbnail template.annotated_preview "431" upscale=True as im %}<img src="{{ im.url }}" alt="{{ template }} Annotated Preview" />{% endthumbnail %}
+        </div>
+        <div class="product-desc">
+            <ul>
+                <li class="title">{{ template }}</li>
+                {% for b in template.templateblock_set.all %}
+                <li class="desc">{{ b.sequence}}. {{ b.label }}</li>
+                {% endfor %}
+			</ul>
+		</div>			
+	</div>
+    {% endblock %}
+{% endblock %}

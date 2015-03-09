@@ -1,0 +1,56 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}
+			{% block content %}
+				<div class="feature-sub">
+					<div class="content flyer">
+						<div class="product-preview">
+							{% thumbnail theme.coverdesign.preview "250x325" as im %}
+							<img src="{{ im.url }}" alt="{{ theme.name }}" />
+							{% endthumbnail %}
+						</div>
+						<div class="product-desc">
+							<p>You selected {{ theme }}! Before you purchase the template, we'll suggest the number of pages for the print edition based on how many members are part of your organization.</p>
+							<div class="form">
+								<form action="." method="post">
+									{% csrf_token %}
+									{{ form.membership }}
+									<button type="submit" name="" value="" class="css3button">Next</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-sub">
+					<!-- "previous page" action -->
+					<a class="clprev browse left"></a>
+					<!-- root element for scrollable -->
+					<div class="scrollable-sub">
+						<!-- root element for the items -->
+						<div class="items">{% spaceless %}
+							<div>
+								{% for design in theme.spreaddesign_set.all %}
+									{% thumbnail design.preview "700x454" as im %}
+										<a onclick="$().jOverlay({url:'{{ im.url }}', imgLoading : '{{ STATIC_URL }}m/demo/ajax-loader.gif'});">
+									{% endthumbnail %}
+									{% thumbnail design.preview "185x122" as im %}
+										<img src="{{ im.url }}" style="margin:{{ im|margin:"185x122" }}" alt="{{ design }}"</a>
+									{% endthumbnail %}
+									{% if forloop.revcounter > 1 %}{% cycle '' '' '</div><div>' %}{% endif %}
+								{% endfor %}
+							</div>
+						</div>{% endspaceless %}
+					</div>
+					<!-- "next page" action -->
+					<a class="clnext browse right"></a> <!-- wrapper for navigator elements -->
+					<div class="navi"></div>
+				</div>
+				<p class="clear"></p>
+			{% endblock content %}
+			{% block sidebar %}
+			<div id="sidebar">
+				<div id="browse-sub">
+				{% include "selfpublish/sidebar/account.html" %}
+				{% include "selfpublish/sidebar/resources.html" %}
+				</div>
+			</div>
+			{% endblock sidebar %}

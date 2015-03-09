@@ -1,0 +1,54 @@
+{% extends "selfpublish/base.html" %}
+{% load thumbnail %}{% load linebreaksli %}{% load lookup %}
+			{% block content %}
+				<div class="feature-full">
+					<div id="salesphase">
+						<h3><small><sup>SALES ENGINE</sup></small><br />
+						{{ publication }}</h3>
+							<div class="salesoptions">
+								<ul>
+									{% include "selfpublish/sales_navbar.html" %}
+								</ul>
+							</div>
+							<div id="advertiserlist">
+								<h2>Import Leads</h2></div>
+								<div class="form">
+									<table border="0">
+										<tbody>
+											<tr>
+												<td colspan="{{ fields|length }}">
+													<div class="form">
+														<form enctype="multipart/form-data" method="post">
+														{% csrf_token %}
+														{{ form.as_p }}
+														{% if path %}
+														<p>Choose fields to import. Organization and contact are required fields. Existing leads with matching organization and contact in import file will be updated. <em>{{ new_leads|length }} leads for import/update.</em></p>
+														<input type="hidden" name="path" value="{{ path }}" />
+														<button id="demo2" type="submit" name="next" value="next" class="css3button">Next</button>
+														{% else %}
+														<p>Choose a comma-delimited text file (.CSV) from which to import leads. The first row must contain field names.</p>
+														<button id="demo2" type="submit" name="upload" value="upload" class="css3button">Upload</button>
+														{% endif %}
+														<a href="../">
+														<button id="demo2" type="submit" name="cancel" value="cancel" class="css3button">Cancel</button>
+														</a>
+														</form>
+													</div>
+												</td>
+											</tr>
+											<tr>{% for field in fields %}<th>{{ field }}</th>{% endfor %}</tr>
+											{% for lead in new_leads %}
+											<tr>
+												{% for field in fields %}<td>{{ lead|hash:field }}</td>{% endfor %}
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<br/><p class="clear"></p>
+					</div>
+					<p class="clear"></p>
+				</div>
+			{% endblock content %}
